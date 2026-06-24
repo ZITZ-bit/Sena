@@ -2,26 +2,32 @@
   "name": "sena",
   "version": "1.0.0",
   "private": true,
+
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+
   "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+
     "dev:web": "npm run dev -w web",
     "dev:admin": "npm run dev -w admin",
     "dev:api": "npm run start:dev -w api",
 
-    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
-    "dev:all": "concurrently \"npm run dev:web\" \"npm run dev:api\" \"npm run dev:admin\"",
-
     "build:web": "npm run build -w web",
     "build:admin": "npm run build -w admin",
-    "build:api": "npm run build -w api",
-    
-    "build": "npm run build:web && npm run build:api"
+    "build:api": "npm run build -w api"
   },
+
   "license": "ISC",
+
   "devDependencies": {
-    "concurrently": "^10.0.0"
+    "turbo": "^2.9.18",
+    "typescript": "^6.0.3"
   }
 }
