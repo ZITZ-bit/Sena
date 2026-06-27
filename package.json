@@ -3,28 +3,28 @@
   "version": "1.0.0",
   "private": true,
 
+  "packageManager": "npm@11.9.0",
+
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
 
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
+    "dev": "turbo dev",
+    "build": "turbo build",
 
-    "lint": "turbo run lint",
-    "test": "turbo run test",
+    "lint": "turbo lint",
+    "test": "turbo test",
 
-    "dev:web": "npm run dev -w web",
-    "dev:admin": "npm run dev -w admin",
-    "dev:api": "npm run start:dev -w api",
+    "dev:web": "turbo dev --filter=web",
+    "dev:admin": "turbo dev --filter=admin",
+    "dev:api": "turbo dev --filter=api",
 
-    "build:web": "npm run build -w web",
-    "build:admin": "npm run build -w admin",
-    "build:api": "npm run build -w api"
+    "build:web": "turbo build --filter=web",
+    "build:admin": "turbo build --filter=admin",
+    "build:api": "turbo build --filter=api"
   },
-
-  "license": "ISC",
 
   "devDependencies": {
     "turbo": "^2.9.18",

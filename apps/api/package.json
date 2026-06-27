@@ -8,10 +8,11 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --prefer-ts-exts src/main.ts",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --prefer-ts-exts src/main.ts",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "npm run build && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -48,6 +49,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
