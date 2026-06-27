@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model carreras {
+  id          Int           @id @default(autoincrement())
+  nombre      String        @db.VarChar(100)
+  descripcion String?
+  estudiantes estudiantes[]
+  materias    materias[]
+}
+
+model estudiantes {
+  id               Int        @id @default(autoincrement())
+  nombre           String     @db.VarChar(100)
+  apellido         String     @db.VarChar(100)
+  correo           String     @unique @db.VarChar(150)
+  fecha_nacimiento DateTime   @db.Date
+  telefono         String?    @db.VarChar(30)
+  direccion        String?
+  foto_perfil      String?
+  usuario_id       Int        @unique
+  semestre_id      Int?
+  carrera_id       Int?
+  created_at       DateTime?  @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?  @default(now()) @db.Timestamp(6)
+  carreras         carreras?  @relation(fields: [carrera_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  semestres        semestres? @relation(fields: [semestre_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuarios         usuarios   @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model materias {
+  id         Int         @id @default(autoincrement())
+  nombre     String      @db.VarChar(100)
+  codigo     String      @unique @db.VarChar(20)
+  creditos   Int?        @default(0)
+  carrera_id Int
+  carreras   carreras    @relation(fields: [carrera_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  secciones  secciones[]
+}
+
+model roles {
+  id            Int             @id @default(autoincrement())
+  nombre        String          @unique @db.VarChar(50)
+  descripcion   String?
+  usuario_roles usuario_roles[]
+}
+
+model secciones {
+  id         Int      @id @default(autoincrement())
+  nombre     String   @db.VarChar(10)
+  materia_id Int
+  materias   materias @relation(fields: [materia_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model semestres {
+  id          Int           @id @default(autoincrement())
+  nombre      String        @db.VarChar(50)
+  estudiantes estudiantes[]
+}
+
+model usuario_roles {
+  usuario_id Int
+  rol_id     Int
+  roles      roles    @relation(fields: [rol_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuarios   usuarios @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([usuario_id, rol_id])
+}
+
+model usuarios {
+  id            Int             @id @default(autoincrement())
+  cedula        String          @unique @db.VarChar(20)
+  password      String
+  estado        Boolean?        @default(true)
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  estudiantes   estudiantes?
+  usuario_roles usuario_roles[]
+}
