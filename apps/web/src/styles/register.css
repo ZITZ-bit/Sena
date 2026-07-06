@@ -1,0 +1,91 @@
+:root {
+  --color-bg: #2D4A36;
+  --color-card: #F3F4F6;
+  --color-text-light: #FFFFFF;
+  --color-text-dark: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-btn: #1E3324;
+  --color-btn-hover: #152419;
+  --color-border: #D1D5DB;
+  --color-focus: #2D4A36;
+  --color-error: #DC2626;
+  --color-error-bg: #FEF2F2;
+  --color-success: #166534;
+  --color-success-bg: #F0FDF4;
+  --radius-card: 14px;
+  --radius-input: 8px;
+  --radius-btn: 8px;
+  --shadow-card: 0 8px 32px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.10);
+}
+
+.pageWrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.brandArea {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.75rem;
+}
+
+.logoMark {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.centeredCard {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+}
+
+.cardHeader {
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: .5rem;
+}
+
+.cardSubtitle {
+  color: var(--color-text-muted);
+}
+
+.loginPrompt {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.loginLink {
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+.loginLink:hover {
+  opacity: .8;
+}
