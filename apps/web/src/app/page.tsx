@@ -8,7 +8,6 @@ export default function Login() {
 
       <section className="login-image">
         <div className="login-overlay">
-          {/* Contenedor de marca premium reemplazando el "Bienvenidos" feo */}
           <div className="brand-showcase">
             <div className="brand-logo-accent"></div>
             <h1 className="brand-title">SENA</h1>
