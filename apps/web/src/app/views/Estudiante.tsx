@@ -8,7 +8,8 @@
 
 import Tabla from "@/components/Tabla";
 import TablaSemestre from "@/components/PensumTable";
-import DatosEstudiante from "@/components/DatosEstudiante";
+import DatosAcademicos from "@/components/DatosAcademicos";
+import DatosEstudiante from "@/components/DatosEstudiantes";
 
 /* Data */
 
@@ -22,6 +23,10 @@ export default function Estudiante() {
 
       <section>
         <DatosEstudiante />
+      </section>
+
+      <section>
+        <DatosAcademicos />
       </section>
 
       <section>
