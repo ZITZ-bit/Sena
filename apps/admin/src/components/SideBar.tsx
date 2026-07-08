@@ -4,7 +4,11 @@ import "boxicons/css/boxicons.min.css";
 
 import { useSideBar } from "../hooks/useSidebar";
 
-function SideBar() {
+interface SideBarProps {
+  onSelect: (section: string) => void;
+}
+
+function SideBar({onSelect}: SideBarProps) {
 
   const {
     open,
@@ -34,7 +38,10 @@ function SideBar() {
         <nav className="py-6 flex flex-col">
 
           {menuItems.map((item) => (
-            <button key={item.label} className="flex items-center gap-4 h-14 px-7 hover:bg-[#707897] transition-all duration-300 cursor-pointer">
+            <button key={item.label} 
+            onClick={() => onSelect(item.label)}
+            className="flex items-center gap-4 h-14 px-7 hover:bg-[#707897] transition-all duration-300 cursor-pointer">
+              
               <i className={`bx ${item.icon} text-2xl`} />
 
               {open && (

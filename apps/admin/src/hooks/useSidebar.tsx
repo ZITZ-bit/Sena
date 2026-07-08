@@ -7,7 +7,7 @@ const menuItems = [
   },
   {
     icon: "bx-user-plus",
-    label: "Registrar Profesor"
+    label: "Registrar Profesores"
   },
   {
     icon: "bx-group",
