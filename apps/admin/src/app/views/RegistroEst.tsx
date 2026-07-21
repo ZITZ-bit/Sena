@@ -6,14 +6,16 @@
 
 /* Componentes Reutilizables */
 
-
+import FormEst from "@/components/FormEst";
 /* Data */
 
 
 export default function RegistroEst() {
   return (
-    <section>
-      <h1 className="text-center">este es el registro mmgv xd</h1>
-    </section>
+    <>
+      <section>
+        <FormEst />
+      </section>
+    </>
   );
 }

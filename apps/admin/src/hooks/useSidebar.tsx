@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { SidebarContext } from "../context/SidebarContext";
 
 const menuItems = [
   {
@@ -24,17 +25,17 @@ const menuItems = [
 ];
 
 export function useSideBar() {
+  const context = useContext(SidebarContext);
 
-  const [open, setOpen] = useState(false);
+  if (!context) {
+    throw new Error("useSideBar debe ser usado dentro de SidebarProvider");
+  }
 
-  const toggleSideBar = () => {
-    setOpen(prev => !prev);
-  };
+  const { open, toggleSideBar } = context;
 
   return {
     open,
     menuItems,
     toggleSideBar
   };
-
 }
