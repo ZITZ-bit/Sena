@@ -4,11 +4,13 @@ import { AppService } from './app.service';
 
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { RolesModule } from './roles/roles.module';
+import { EstudiantesModule } from './estudiantes/estudiantes.module';
 
 @Module({
   imports: [
     UsuariosModule,
     RolesModule,
+    EstudiantesModule,
   ],
   controllers: [
     AppController,
