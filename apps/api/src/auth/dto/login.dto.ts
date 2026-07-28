@@ -3,10 +3,10 @@ import { IsString, MinLength } from 'class-validator';
 export class LoginDto {
 
   @IsString()
-  cedula: string;
+  cedula!: string;
 
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
 }

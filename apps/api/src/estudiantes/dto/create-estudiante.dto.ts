@@ -6,26 +6,26 @@ export class CreateEstudianteDto {
   @IsString()
   @MinLength(6)
   @MaxLength(20)
-  cedula: string;
+  cedula!: string;
 
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   // Datos del estudiante
   @IsString()
   @MaxLength(100)
-  nombre: string;
+  nombre!: string;
 
   @IsString()
   @MaxLength(100)
-  apellido: string;
+  apellido!: string;
 
   @IsEmail()
-  correo: string;
+  correo!: string;
 
   @IsDateString()
-  fecha_nacimiento: string;
+  fecha_nacimiento!: string;
 
   @IsOptional()
   @IsString()
