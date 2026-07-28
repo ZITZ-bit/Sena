@@ -1,0 +1,110 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 0 0.6rem;
+    border: none;
+    border-bottom: 1px solid #d4d4d4;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    transition: 0.25s;
+}
+
+.form-input:focus {
+    border-bottom: 2px solid #001f6b;
+}
+
+.form-input::placeholder {
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: #aaa;
+}
+
+.form-input:focus::placeholder {
+    opacity: 1;
+}
+
+.form-label {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    color: #777;
+    transition: 0.25s ease;
+    pointer-events: none;
+    background: #fff;
+    padding: 0 0.2rem;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+    top: -0.55rem;
+    font-size: 0.78rem;
+    color: #001f6b;
+    font-weight: 600;
+}
+
+.form-select {
+    width: 100%;
+    padding: 1rem 0 0.6rem;
+    border: none;
+    border-bottom: 1px solid #d4d4d4;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    transition: 0.25s;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #001f6b 50%), linear-gradient(135deg, #001f6b 50%, transparent 50%);
+    background-position: calc(100% - 12px) calc(1rem + 2px), calc(100% - 7px) calc(1rem + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+}
+
+.form-select:focus {
+    border-bottom: 2px solid #001f6b;
+}
+
+.form-select + .form-label {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    color: #777;
+    transition: 0.25s ease;
+    pointer-events: none;
+    background: #fff;
+    padding: 0 0.2rem;
+}
+
+.form-select:focus + .form-label,
+.form-select:not([value='']) + .form-label,
+.form-select option:checked + .form-label {
+    top: -0.55rem;
+    font-size: 0.78rem;
+    color: #001f6b;
+    font-weight: 600;
+}
+
+.form-textarea {
+    min-height: 120px;
+    padding: 1rem 0 0.6rem;
+    border: none;
+    border-bottom: 1px solid #d4d4d4;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    transition: 0.25s;
+    resize: vertical;
+    width: 100%;
+}
