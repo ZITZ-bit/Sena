@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { UsuariosModule } from './usuarios/usuarios.module';
-import { RolesModule } from './roles/roles.module';
-import { EstudiantesModule } from './estudiantes/estudiantes.module';
 import { AuthModule } from './auth/auth.module';
+import { RolesModule } from './roles/roles.module';
+import { CarrerasModule } from './carreras/carreras.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { EstudiantesModule } from './estudiantes/estudiantes.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
     RolesModule,
     EstudiantesModule,
     AuthModule,
+    CarrerasModule,
   ],
   controllers: [
     AppController,
