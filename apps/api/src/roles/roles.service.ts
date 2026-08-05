@@ -1,6 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+
 import { PrismaService } from '../prisma/prisma.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
+
+import { CreateRolDto } from './dto/create-rol.dto';
 
 @Injectable()
 export class RolesService {
@@ -10,9 +13,34 @@ export class RolesService {
     private readonly usuariosService: UsuariosService,
   ) {}
 
+  // Crear rol
+  async create(
+    createRolDto: CreateRolDto,
+  ) {
+
+    const rolExistente = await this.prisma.roles.findUnique({
+      where: {
+        nombre: createRolDto.nombre,
+      },
+    });
+
+    if (rolExistente) {
+      throw new BadRequestException(
+        'El rol ya está registrado.',
+      );
+    }
+
+    return this.prisma.roles.create({
+      data: createRolDto,
+    });
+
+  }
+
   // Obtener todos los roles
   async findAll() {
+
     return this.prisma.roles.findMany();
+
   }
 
   // Buscar un rol por ID
@@ -25,7 +53,9 @@ export class RolesService {
     });
 
     if (!rol) {
-      throw new NotFoundException('Rol no encontrado.');
+      throw new NotFoundException(
+        'Rol no encontrado.',
+      );
     }
 
     return rol;
@@ -41,7 +71,9 @@ export class RolesService {
     });
 
     if (!rol) {
-      throw new NotFoundException('Rol no encontrado.');
+      throw new NotFoundException(
+        'Rol no encontrado.',
+      );
     }
 
     return rol;
@@ -53,13 +85,10 @@ export class RolesService {
     rolId: number,
   ) {
 
-    // Verificar que exista el usuario
     await this.usuariosService.findOne(usuarioId);
 
-    // Verificar que exista el rol
     await this.findOne(rolId);
 
-    // Verificar que aún no tenga ese rol
     const existe = await this.prisma.usuario_roles.findUnique({
       where: {
         usuario_id_rol_id: {
@@ -102,7 +131,6 @@ export class RolesService {
   // Obtener todos los roles de un usuario
   async getUserRoles(usuarioId: number) {
 
-    // Verificar que exista el usuario
     await this.usuariosService.findOne(usuarioId);
 
     return this.prisma.usuario_roles.findMany({

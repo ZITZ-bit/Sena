@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { RolesService } from './roles.service';
+
+import { CreateRolDto } from './dto/create-rol.dto';
 
 @Controller('roles')
 export class RolesController {
@@ -8,6 +10,15 @@ export class RolesController {
     private readonly rolesService: RolesService,
   ) {}
 
+  // Crear rol
+  @Post()
+  create(
+    @Body() createRolDto: CreateRolDto,
+  ) {
+    return this.rolesService.create(createRolDto);
+  }
+
+  // Obtener todos los roles
   @Get()
   findAll() {
     return this.rolesService.findAll();
