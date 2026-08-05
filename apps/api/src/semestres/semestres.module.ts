@@ -19,4 +19,5 @@ import { PrismaModule } from '../prisma/prisma.module';
     SemestresService,
   ],
 })
+
 export class SemestresModule {}
