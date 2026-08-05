@@ -10,6 +10,33 @@ export class RolesService {
     private readonly usuariosService: UsuariosService,
   ) {}
 
+  // Crear rol
+  async create(
+    nombre: string,
+    descripcion?: string,
+  ) {
+
+    const rolExistente = await this.prisma.roles.findUnique({
+      where: {
+        nombre,
+      },
+    });
+
+    if (rolExistente) {
+      throw new BadRequestException(
+        'El rol ya está registrado.',
+      );
+    }
+
+    return this.prisma.roles.create({
+      data: {
+        nombre,
+        descripcion,
+      },
+    });
+
+  }
+
   // Obtener todos los roles
   async findAll() {
     return this.prisma.roles.findMany();

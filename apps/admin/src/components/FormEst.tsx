@@ -13,12 +13,13 @@ import Alert from "./Alert";
 
 import { useSideBar } from "../hooks/useSidebar";
 import { useFormEst } from "../hooks/useFormEst"; 
-import { useAlert } from "../hooks/useAlert";
 
 function FormEst() {
 
   const { open } = useSideBar();
-  const { formData, alert, handleChange, handleFileChange, handleSubmit } = useFormEst();
+
+  const { formData, alert, carreras, semestres,
+        handleChange, handleFileChange, handleSubmit } = useFormEst();
 
   return (
     <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 overflow-x-hidden`}>
@@ -61,6 +62,16 @@ function FormEst() {
             </div>
 
             <div className="form-group">
+              <input id="password" type="password" value={formData.password} onChange={handleChange} placeholder="Ingrese la contraseña" className="form-input" />
+              <label htmlFor="password" className="form-label">Contraseña</label>
+            </div>
+
+            <div className="form-group">
+              <input id="telefono" type="text" value={formData.telefono} onChange={handleChange} placeholder="0412-1234567" className="form-input"/>
+              <label htmlFor="telefono" className="form-label">Teléfono</label>
+            </div>
+
+            <div className="form-group">
               <input id="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleChange} className="form-input"/>
               <label htmlFor="fecha_nacimiento" className="form-label">Fecha de nacimiento</label>
             </div>
@@ -69,6 +80,13 @@ function FormEst() {
 
               <select id="carrera_id" value={formData.carrera_id} onChange={handleChange} className="form-select">
                 <option value="">Seleccione una carrera</option>
+
+                {carreras.map((carrera) => (
+                  <option key={carrera.id} value={carrera.id}>
+                    {carrera.nombre}
+                  </option>
+                ))}
+
               </select>
 
               <label htmlFor="carrera_id" className="form-label">Carrera</label>
@@ -79,15 +97,17 @@ function FormEst() {
 
               <select id="semestre_id" value={formData.semestre_id} onChange={handleChange} className="form-select">
                 <option value="">Seleccione un semestre</option>
+
+                {semestres.map((semestre) => (
+                  <option key={semestre.id} value={semestre.id}>
+                    {semestre.nombre}
+                  </option>
+                ))}
+
               </select>
 
               <label htmlFor="semestre_id" className="form-label">Semestre</label>
 
-            </div>
-
-            <div className="form-group">
-              <input id="telefono" type="text" value={formData.telefono} onChange={handleChange} placeholder="0412-1234567" className="form-input"/>
-              <label htmlFor="telefono" className="form-label">Teléfono</label>
             </div>
 
             <div>
