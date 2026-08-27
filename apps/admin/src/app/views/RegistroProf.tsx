@@ -6,14 +6,17 @@
 
 /* Componentes Reutilizables */
 
+import FormProf from "@/components/FormProf";
 
 /* Data */
 
 
 export default function RegistroEst() {
   return (
-    <section>
-      <h1 className="text-center">indigo</h1>
-    </section>
+    <>
+      <section>
+        <FormProf />
+      </section>
+    </>
   );
 }

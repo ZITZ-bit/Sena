@@ -33,13 +33,9 @@ function FormEst() {
               Registro de estudiantes
             </h2>
 
-            {
-              alert.show && (
-                
-                <Alert type={alert.type} message={alert.message}/>
-
-              )
-            }
+            {alert.show && (  
+              <Alert type={alert.type} message={alert.message}/>
+            )}
 
             <div className="form-group">
               <input id="nombre" type="text" value={formData.nombre} onChange={handleChange} placeholder="Ingrese el nombre" className="form-input"/>
