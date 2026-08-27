@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "npm run build && node dist/main",
     "prisma:generate": "prisma generate --schema prisma/schema.prisma",
-    "prisma:dbpull": "prisma db pull --schema prisma/schema.prisma",
+    "prisma:dbpull": "prisma db pull --config prisma/prisma.config.ts",
     "prisma:migrate:dev": "prisma migrate dev --schema prisma/schema.prisma",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:studio": "prisma studio --schema prisma/schema.prisma",

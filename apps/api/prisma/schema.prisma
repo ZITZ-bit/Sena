@@ -34,13 +34,14 @@ model estudiantes {
 }
 
 model materias {
-  id         Int         @id @default(autoincrement())
-  nombre     String      @db.VarChar(100)
-  codigo     String      @unique @db.VarChar(20)
-  creditos   Int?        @default(0)
-  carrera_id Int
-  carreras   carreras    @relation(fields: [carrera_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  secciones  secciones[]
+  id                  Int                   @id @default(autoincrement())
+  nombre              String                @db.VarChar(100)
+  codigo              String                @unique @db.VarChar(20)
+  creditos            Int?                  @default(0)
+  carrera_id          Int
+  asignacion_profesor asignacion_profesor[]
+  carreras            carreras              @relation(fields: [carrera_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  secciones           secciones[]
 }
 
 model roles {
@@ -51,16 +52,18 @@ model roles {
 }
 
 model secciones {
-  id         Int      @id @default(autoincrement())
-  nombre     String   @db.VarChar(10)
-  materia_id Int
-  materias   materias @relation(fields: [materia_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id                  Int                   @id @default(autoincrement())
+  nombre              String                @db.VarChar(10)
+  materia_id          Int
+  asignacion_profesor asignacion_profesor[]
+  materias            materias              @relation(fields: [materia_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model semestres {
-  id          Int           @id @default(autoincrement())
-  nombre      String        @db.VarChar(50)
-  estudiantes estudiantes[]
+  id                  Int                   @id @default(autoincrement())
+  nombre              String                @db.VarChar(50)
+  asignacion_profesor asignacion_profesor[]
+  estudiantes         estudiantes[]
 }
 
 model usuario_roles {
@@ -80,5 +83,34 @@ model usuarios {
   created_at    DateTime?       @default(now()) @db.Timestamp(6)
   updated_at    DateTime?       @default(now()) @db.Timestamp(6)
   estudiantes   estudiantes?
+  profesores    profesores?
   usuario_roles usuario_roles[]
+}
+
+model asignacion_profesor {
+  id          Int        @id @default(autoincrement())
+  profesor_id Int
+  materia_id  Int
+  seccion_id  Int
+  semestre_id Int
+  materias    materias   @relation(fields: [materia_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_asignacion_materia")
+  profesores  profesores @relation(fields: [profesor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_asignacion_profesor")
+  secciones   secciones  @relation(fields: [seccion_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_asignacion_seccion")
+  semestres   semestres  @relation(fields: [semestre_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_asignacion_semestre")
+}
+
+model profesores {
+  id                  Int                   @id @default(autoincrement())
+  nombre              String                @db.VarChar(100)
+  apellido            String                @db.VarChar(100)
+  correo              String                @unique @db.VarChar(150)
+  fecha_nacimiento    DateTime              @db.Date
+  telefono            String?               @db.VarChar(30)
+  direccion           String?
+  foto_perfil         String?
+  usuario_id          Int                   @unique
+  created_at          DateTime?             @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?             @default(now()) @db.Timestamp(6)
+  asignacion_profesor asignacion_profesor[]
+  usuarios            usuarios              @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_profesor_usuario")
 }
