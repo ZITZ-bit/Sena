@@ -2,7 +2,7 @@
 
 import "boxicons/css/boxicons.min.css";
 
-import { useSideBar } from "../hooks/useSidebar";
+import { useSideBar } from "../hooks/Global/useSidebar";
 
 interface SideBarProps {
   onSelect: (section: string) => void;

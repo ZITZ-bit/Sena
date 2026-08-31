@@ -10,19 +10,19 @@ import Alert from "./Alert";
 
 /* Hooks */
 
-import { useSideBar } from "../hooks/useSidebar";
-import { useFormProf } from "../hooks/useFormProf"
+import { useSideBar } from "../hooks/Global/useSidebar";
+import { useFormProf } from "@/hooks/Profesores/useFormProf";
 
 function FormProf() {
 
   const { open } = useSideBar();
   
   const { formData, alert,
-          handleChange, handleFileChange, handleSubmit } = useFormProf();
+        handleChange, handleFileChange, handleSubmit } = useFormProf();
 
   return (
-    <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 overflow-x-hidden`}>
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gray-50 p-8 overflow-x-hidden`}>
+      <div className="max-w-7xl mx-auto bg-white/90 rounded-xl shadow-lg p-6 border border-gray-200">
 
         <form className="space-y-6" onSubmit={handleSubmit}>
 

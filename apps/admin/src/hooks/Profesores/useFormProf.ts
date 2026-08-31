@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAlert } from "./useAlert";
+import { useAlert } from "../Global/useAlert";
 
 export function useFormProf() {
   const [formData, setFormData] = useState({
