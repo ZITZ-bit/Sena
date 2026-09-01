@@ -9,7 +9,6 @@ export function useFormProf() {
     fecha_nacimiento: "",
     telefono: "",
     direccion: "",
-    foto_perfil: "",
   });
 
   const { alert, showSuccess, showError } = useAlert();
@@ -20,15 +19,6 @@ export function useFormProf() {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
-    });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setFormData({
-      ...formData,
-      foto_perfil: file.name,
     });
   };
 
@@ -59,7 +49,6 @@ export function useFormProf() {
       fecha_nacimiento: "",
       telefono: "",
       direccion: "",
-      foto_perfil: "",
       });
     } catch {
       showError("No se pudo conectar con el servidor.");
@@ -70,7 +59,6 @@ export function useFormProf() {
     formData,
     alert,
     handleChange,
-    handleFileChange,
     handleSubmit,
   };
 }

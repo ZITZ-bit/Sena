@@ -15,11 +15,6 @@ interface Semestre {
 
 export function useFormEst() {
 
-  const [foto, setFoto] =
-    useState<File | null>(null);
-
-  const DEFAULT_PROFILE_IMAGE = "/Image/Perfil_Default.jpg";
-
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -107,18 +102,6 @@ export function useFormEst() {
     });
   };
 
-  // Seleccionar foto
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    setFoto(file);
-  };
-
   // Registrar estudiante
   const handleSubmit = async (
     e: React.FormEvent
@@ -149,80 +132,28 @@ export function useFormEst() {
     }
 
     try {
-      const data = new FormData();
-
-      data.append(
-        "nombre",
-        formData.nombre
-      );
-
-      data.append(
-        "apellido",
-        formData.apellido
-      );
-
-      data.append(
-        "cedula",
-        formData.cedula
-      );
-
-      data.append(
-        "password",
-        formData.password
-      );
-
-      data.append(
-        "correo",
-        formData.correo
-      );
-
-      data.append(
-        "fecha_nacimiento",
-        formData.fecha_nacimiento
-      );
-
-      data.append(
-        "telefono",
-        formData.telefono
-      );
-
-      data.append(
-        "direccion",
-        formData.direccion
-      );
-
-      if (formData.carrera_id) {
-        data.append(
-          "carrera_id",
-          formData.carrera_id
-        );
-      }
-
-      if (formData.semestre_id) {
-        data.append(
-          "semestre_id",
-          formData.semestre_id
-        );
-      }
-
-      // Agregar foto
-      if (foto) {
-        data.append(
-          "foto_perfil",
-          foto
-        );
-      } else {
-        data.append(
-          "foto_perfil",
-          DEFAULT_PROFILE_IMAGE
-        );
-      }
+      const payload = {
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        cedula: formData.cedula,
+        password: formData.password,
+        correo: formData.correo,
+        fecha_nacimiento: formData.fecha_nacimiento,
+        telefono: formData.telefono || undefined,
+        direccion: formData.direccion || undefined,
+        carrera_id: formData.carrera_id ? Number(formData.carrera_id) : undefined,
+        semestre_id: formData.semestre_id ? Number(formData.semestre_id) : undefined,
+        foto_perfil: "/Image/Perfil_Default.jpg",
+      };
 
       const response = await fetch(
         "http://localhost:3002/estudiantes",
         {
           method: "POST",
-          body: data,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }
       );
 
@@ -257,9 +188,6 @@ export function useFormEst() {
         "Estudiante registrado correctamente."
       );
 
-      // Limpiar foto seleccionada
-      setFoto(null);
-
     } catch (error) {
 
       console.error(
@@ -278,9 +206,7 @@ export function useFormEst() {
     carreras,
     semestres,
     alert,
-    foto,
     handleChange,
-    handleFileChange,
     handleSubmit,
   };
 }

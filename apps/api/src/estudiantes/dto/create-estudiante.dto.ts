@@ -37,10 +37,6 @@ export class CreateEstudianteDto {
   direccion?: string;
 
   @IsOptional()
-  @IsString()
-  foto_perfil?: string;
-
-  @IsOptional()
   @IsInt()
   semestre_id?: number;
 

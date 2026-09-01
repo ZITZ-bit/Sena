@@ -6,15 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
-
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
-
-import type { Multer } from 'multer';
 
 import { EstudiantesService } from './estudiantes.service';
 
@@ -29,37 +21,12 @@ export class EstudiantesController {
 
   // Registrar estudiante
   @Post()
-  @UseInterceptors(
-    FileInterceptor('foto_perfil', {
-      storage: diskStorage({
-        destination: './uploads/perfiles',
-
-        filename: (_req, file, callback) => {
-          const extension = extname(
-            file.originalname,
-          );
-
-          const nombreArchivo =
-            `foto-${Date.now()}${extension}`;
-
-          callback(
-            null,
-            nombreArchivo,
-          );
-        },
-      }),
-    }),
-  )
   create(
     @Body()
     createEstudianteDto: CreateEstudianteDto,
-
-    @UploadedFile()
-    foto?: Multer.File,
   ) {
     return this.estudiantesService.create(
       createEstudianteDto,
-      foto,
     );
   }
 

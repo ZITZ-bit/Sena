@@ -5,8 +5,6 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 
-import type { Multer } from 'multer';
-
 import { PrismaService } from '../prisma/prisma.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
 
@@ -23,7 +21,6 @@ export class EstudiantesService {
   // Registrar estudiante
   async create(
     createEstudianteDto: CreateEstudianteDto,
-    foto?: Multer.File,
   ) {
     const {
       cedula,
@@ -34,15 +31,9 @@ export class EstudiantesService {
       fecha_nacimiento,
       telefono,
       direccion,
-      foto_perfil,
       semestre_id,
       carrera_id,
     } = createEstudianteDto;
-
-    // Ruta de la imagen guardada por Multer
-    const fotoPerfil = foto
-      ? `/uploads/perfiles/${foto.filename}`
-      : foto_perfil ?? null;
 
     // FormData envía estos valores como String,
     // pero Prisma necesita Int
@@ -109,7 +100,6 @@ export class EstudiantesService {
           fecha_nacimiento: fechaNacimiento,
           telefono,
           direccion,
-          foto_perfil: fotoPerfil,
           usuario_id: usuario.id,
           semestre_id: semestreId,
           carrera_id: carreraId,

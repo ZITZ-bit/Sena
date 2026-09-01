@@ -10,6 +10,11 @@ export default function TarjetaPerfil({ perfil, onEdit, onDelete }: TarjetaPerfi
   const { open } = useSideBar();
   const isActivo = perfil.estado;
 
+  const fotoPerfilSrc =
+    perfil.foto_perfil?.startsWith("/uploads/")
+      ? `http://localhost:3002${perfil.foto_perfil}`
+      : perfil.foto_perfil || "/Image/Perfil_Default.jpg";
+
   return (
     <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} bg-gradient-to-br from-gray-50 to-gray-100 px-8 pt-8 pb-1 overflow-x-hidden`}>
       <div className="w-full max-w-7xl mx-auto mb-4">
@@ -18,11 +23,7 @@ export default function TarjetaPerfil({ perfil, onEdit, onDelete }: TarjetaPerfi
 
           <div className="w-24 shrink-0 flex justify-center">
             <img
-              src={
-                perfil.foto_perfil
-                  ? `http://localhost:3002${perfil.foto_perfil}`
-                  : "/Image/Perfil_Default.jpg"
-              }
+              src={fotoPerfilSrc}
               alt="Foto de perfil"
               className="h-14 w-14 rounded-full object-cover border-2 border-gray-100"
             />

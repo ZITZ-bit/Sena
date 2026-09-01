@@ -19,7 +19,7 @@ function FormEst() {
   const { open } = useSideBar();
 
   const { formData, alert, carreras, semestres,
-        handleChange, handleFileChange, handleSubmit } = useFormEst();
+        handleChange, handleSubmit } = useFormEst();
 
   return (
     <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gray-50 p-8 overflow-x-hidden`}>
@@ -104,11 +104,6 @@ function FormEst() {
 
               <label htmlFor="semestre_id" className="form-label">Semestre</label>
 
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Foto de perfil</label>
-              <input type="file" onChange={handleFileChange} className="w-full rounded-lg border border-gray-300 px-3 py-2"/>
             </div>
 
           </section>
