@@ -6,7 +6,7 @@
 
 /* Componentes Reutilizables */
 
-import FormEst from "@/components/FormEst";
+import FormEst from "@/components/Formularios/FormEst";
 
 /* Data */
 

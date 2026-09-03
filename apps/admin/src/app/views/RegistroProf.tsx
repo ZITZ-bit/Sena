@@ -6,7 +6,7 @@
 
 /* Componentes Reutilizables */
 
-import FormProf from "@/components/FormProf";
+import FormProf from "@/components/Formularios/FormProf";
 
 /* Data */
 

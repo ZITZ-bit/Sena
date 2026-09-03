@@ -28,11 +28,8 @@ export function useFormEst() {
     semestre_id: "",
   });
 
-  const [carreras, setCarreras] =
-    useState<Carrera[]>([]);
-
-  const [semestres, setSemestres] =
-    useState<Semestre[]>([]);
+  const [carreras, setCarreras] = useState<Carrera[]>([]);
+  const [semestres, setSemestres] = useState<Semestre[]>([]);
 
   const {
     alert,
@@ -49,12 +46,8 @@ export function useFormEst() {
           carrerasResponse,
           semestresResponse,
         ] = await Promise.all([
-          fetch(
-            "http://localhost:3002/carreras"
-          ),
-          fetch(
-            "http://localhost:3002/semestres"
-          ),
+          fetch("http://localhost:3002/carreras"),
+          fetch("http://localhost:3002/semestres"),
         ]);
 
         if (
@@ -90,7 +83,7 @@ export function useFormEst() {
     cargarDatos();
   }, []);
 
-  // Cambiar campos del formulario
+  // Cambiar campos
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement
@@ -106,7 +99,6 @@ export function useFormEst() {
   const handleSubmit = async (
     e: React.FormEvent
   ) => {
-
     e.preventDefault();
 
     const camposObligatorios = [
@@ -128,10 +120,12 @@ export function useFormEst() {
       showWarning(
         "Debes completar todos los campos obligatorios antes de registrar el estudiante."
       );
+
       return;
     }
 
     try {
+
       const payload = {
         nombre: formData.nombre,
         apellido: formData.apellido,
@@ -139,10 +133,19 @@ export function useFormEst() {
         password: formData.password,
         correo: formData.correo,
         fecha_nacimiento: formData.fecha_nacimiento,
+
         telefono: formData.telefono || undefined,
+
         direccion: formData.direccion || undefined,
-        carrera_id: formData.carrera_id ? Number(formData.carrera_id) : undefined,
-        semestre_id: formData.semestre_id ? Number(formData.semestre_id) : undefined,
+
+        carrera_id: formData.carrera_id
+          ? Number(formData.carrera_id)
+          : undefined,
+
+        semestre_id: formData.semestre_id
+          ? Number(formData.semestre_id)
+          : undefined,
+
         foto_perfil: "/Image/Perfil_Default.jpg",
       };
 
@@ -150,9 +153,11 @@ export function useFormEst() {
         "http://localhost:3002/estudiantes",
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify(payload),
         }
       );
@@ -163,13 +168,8 @@ export function useFormEst() {
       if (!response.ok) {
 
         if (response.status === 409) {
-
-          showWarning(
-            responseData.message
-          );
-
+          showWarning(responseData.message);
         } else {
-
           showError(
             responseData.message ||
             "No se pudo registrar el estudiante."

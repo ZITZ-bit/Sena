@@ -2,8 +2,8 @@
 
 import { Pencil, Trash2 } from "lucide-react";
 
-import { useSideBar } from "../hooks/Global/useSidebar";
-import { TarjetaPerfilProps } from "../hooks/Global/usePerfilCard";
+import { useSideBar } from "@/hooks/Global/useSidebar";
+import { TarjetaPerfilProps } from "@/hooks/Global/usePerfilCard";
 
 export default function TarjetaPerfil({ perfil, onEdit, onDelete }: TarjetaPerfilProps) {
 

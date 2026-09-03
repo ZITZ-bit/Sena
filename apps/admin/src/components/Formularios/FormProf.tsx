@@ -6,26 +6,23 @@ import "boxicons/css/boxicons.min.css";
 
 /* Componentes De Next */
 
-import Alert from "./Alert";
+import Alert from "../Alertas/Alert";
 
 /* Hooks */
 
-import { useSideBar } from "../hooks/Global/useSidebar";
+import { useSideBar } from "@/hooks/Global/useSidebar";
 import { useFormProf } from "@/hooks/Profesores/useFormProf";
 
 function FormProf() {
 
   const { open } = useSideBar();
-  
-  const { formData, alert,
-        handleChange, handleSubmit } = useFormProf();
+  const { formData, alert, handleChange, handleSubmit } = useFormProf();
 
   return (
     <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gray-50 p-8 overflow-x-hidden`}>
       <div className="max-w-7xl mx-auto bg-white/90 rounded-xl shadow-lg p-6 border border-gray-200">
 
         <form className="space-y-6" onSubmit={handleSubmit}>
-
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
 
             <h2 className="lg:col-span-2 text-lg font-semibold text-gray-800">
@@ -69,17 +66,14 @@ function FormProf() {
           </section>
 
           <section className="flex justify-end gap-3 border-t border-gray-200 pt-5">
-
-            <button type="reset" className="rounded-lg border border-gray-300 px-5 py-2 hover:bg-gray-100 transition-colors">
+            <button type="reset" className="cursor-pointer rounded-lg border bg-red-400 px-5 py-2 text-white hover:bg-red-500 transition-colors">
               Cancelar
             </button>
 
-            <button type="submit" className="rounded-lg bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 transition-colors">
+            <button type="submit" className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 transition-colors">
               Registrar profesor
             </button>
-
           </section>
-
         </form>
 
       </div>
