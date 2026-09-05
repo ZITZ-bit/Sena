@@ -8,6 +8,8 @@ import { CarrerasModule } from './carreras/carreras.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { SemestresModule } from './semestres/semestres.module';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
+import { ProfesoresService } from './profesores/profesores.service';
+import { ProfesoresModule } from './profesores/profesores.module';
 
 @Module({
   imports: [
@@ -17,12 +19,14 @@ import { EstudiantesModule } from './estudiantes/estudiantes.module';
     AuthModule,
     CarrerasModule,
     SemestresModule,
+    ProfesoresModule,
   ],
   controllers: [
     AppController,
   ],
   providers: [
     AppService,
+    ProfesoresService,
   ],
 })
 export class AppModule {}
