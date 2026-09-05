@@ -5,6 +5,8 @@ export function useFormProf() {
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
+    cedula: "",
+    password: "",
     correo: "",
     fecha_nacimiento: "",
     telefono: "",
@@ -45,6 +47,8 @@ export function useFormProf() {
       setFormData({
       nombre: "",
       apellido: "",
+      cedula: "",
+      password: "",
       correo: "",
       fecha_nacimiento: "",
       telefono: "",

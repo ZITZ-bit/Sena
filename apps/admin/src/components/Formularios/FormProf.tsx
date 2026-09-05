@@ -35,12 +35,17 @@ function FormProf() {
 
             <div className="form-group">
               <input id="nombre" type="text" value={formData.nombre} onChange={handleChange} placeholder="Ingrese el nombre" className="form-input"/>
-              <label htmlFor="nombre" className="form-label">Nombre</label>
+              <label htmlFor="nombre" className="form-label">Nombres</label>
             </div>
 
             <div className="form-group">
               <input id="apellido" type="text" value={formData.apellido} onChange={handleChange} placeholder="Ingrese el apellido" className="form-input"/>
-              <label htmlFor="apellido" className="form-label">Apellido</label>
+              <label htmlFor="apellido" className="form-label">Apellidos</label>
+            </div>
+
+            <div className="form-group">
+              <input id="cedula" type="text" value={formData.cedula} onChange={handleChange} placeholder="Ej: V-12345678" className="form-input"/>
+              <label htmlFor="cedula" className="form-label">Cédula</label>
             </div>
 
             <div className="form-group">
@@ -49,8 +54,8 @@ function FormProf() {
             </div>
 
             <div className="form-group">
-              <input id="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleChange} className="form-input"/>
-              <label htmlFor="fecha_nacimiento" className="form-label">Fecha de nacimiento</label>
+              <input id="password" type="password" value={formData.password} onChange={handleChange} placeholder="Ingrese la contraseña" className="form-input" />
+              <label htmlFor="password" className="form-label">Contraseña</label>
             </div>
 
             <div className="form-group">
@@ -59,8 +64,8 @@ function FormProf() {
             </div>
 
             <div className="form-group">
-              <input id="direccion" type="text" value={formData.direccion} onChange={handleChange} placeholder="Ingrese la dirección" className="form-input"/>
-              <label htmlFor="direccion" className="form-label">Dirección</label>
+              <input id="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleChange} className="form-input"/>
+              <label htmlFor="fecha_nacimiento" className="form-label">Fecha de nacimiento</label>
             </div>
 
           </section>
