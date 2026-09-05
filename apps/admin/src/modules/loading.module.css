@@ -1,0 +1,31 @@
+.cuadrado {
+  animation: loading-square 1.125s ease-in-out infinite;
+}
+
+@keyframes loading-square {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.35);
+    opacity: 0.35;
+  }
+}
+
+.texto {
+  animation: loading-text 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-text {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}

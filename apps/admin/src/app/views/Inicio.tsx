@@ -13,7 +13,7 @@
 export default function Inicio() {
   return (
     <section>
-      <h1 className="text-center">que hay pto xd</h1>
+
     </section>
   );
 }

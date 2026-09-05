@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAlert } from "./useAlert";
+
+import { useAlert } from "../Global/useAlert";
 
 interface Carrera {
   id: number;
@@ -15,7 +16,6 @@ interface Semestre {
 export function useFormEst() {
 
   const [formData, setFormData] = useState({
-
     nombre: "",
     apellido: "",
     cedula: "",
@@ -24,10 +24,8 @@ export function useFormEst() {
     fecha_nacimiento: "",
     telefono: "",
     direccion: "",
-    foto_perfil: "",
     carrera_id: "",
     semestre_id: "",
-
   });
 
   const [carreras, setCarreras] = useState<Carrera[]>([]);
@@ -40,89 +38,105 @@ export function useFormEst() {
     showError,
   } = useAlert();
 
-
   // Obtener carreras y semestres
   useEffect(() => {
-
     const cargarDatos = async () => {
-
       try {
-
-        const [carrerasResponse, semestresResponse] = await Promise.all([
-
+        const [
+          carrerasResponse,
+          semestresResponse,
+        ] = await Promise.all([
           fetch("http://localhost:3002/carreras"),
           fetch("http://localhost:3002/semestres"),
-
         ]);
 
-        if (!carrerasResponse.ok || !semestresResponse.ok) {
-          throw new Error("Error al obtener carreras o semestres");
+        if (
+          !carrerasResponse.ok ||
+          !semestresResponse.ok
+        ) {
+          throw new Error(
+            "Error al obtener carreras o semestres"
+          );
         }
 
-        const carrerasData = await carrerasResponse.json();
-        const semestresData = await semestresResponse.json();
+        const carrerasData =
+          await carrerasResponse.json();
+
+        const semestresData =
+          await semestresResponse.json();
 
         setCarreras(carrerasData);
         setSemestres(semestresData);
 
       } catch (error) {
+        console.error(
+          "Error cargando carreras y semestres:",
+          error
+        );
 
-        console.error("Error cargando carreras y semestres:", error);
-        showError("No se pudieron cargar las carreras y semestres.");
-
+        showError(
+          "No se pudieron cargar las carreras y semestres."
+        );
       }
-
     };
 
     cargarDatos();
-
   }, []);
 
-
+  // Cambiar campos
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement
+    >
   ) => {
-
     setFormData({
-
       ...formData,
       [e.target.id]: e.target.value,
-
     });
-
   };
 
-
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    setFormData({
-
-      ...formData,
-
-      foto_perfil: file.name,
-
-    });
-
-  };
-
-
+  // Registrar estudiante
   const handleSubmit = async (
-    e: React.FormEvent,
+    e: React.FormEvent
   ) => {
-
     e.preventDefault();
+
+    const camposObligatorios = [
+      formData.nombre,
+      formData.apellido,
+      formData.cedula,
+      formData.password,
+      formData.correo,
+      formData.fecha_nacimiento,
+      formData.carrera_id,
+      formData.semestre_id,
+    ];
+
+    const hayCampoVacio = camposObligatorios.some(
+      (campo) => !String(campo).trim()
+    );
+
+    if (hayCampoVacio) {
+      showWarning(
+        "Debes completar todos los campos obligatorios antes de registrar el estudiante."
+      );
+
+      return;
+    }
 
     try {
 
-      const body = {
+      const payload = {
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        cedula: formData.cedula,
+        password: formData.password,
+        correo: formData.correo,
+        fecha_nacimiento: formData.fecha_nacimiento,
 
-        ...formData,
+        telefono: formData.telefono || undefined,
+
+        direccion: formData.direccion || undefined,
 
         carrera_id: formData.carrera_id
           ? Number(formData.carrera_id)
@@ -132,6 +146,7 @@ export function useFormEst() {
           ? Number(formData.semestre_id)
           : undefined,
 
+        foto_perfil: "/Image/Perfil_Default.jpg",
       };
 
       const response = await fetch(
@@ -143,25 +158,22 @@ export function useFormEst() {
             "Content-Type": "application/json",
           },
 
-          body: JSON.stringify(body),
+          body: JSON.stringify(payload),
         }
       );
 
-      const data = await response.json();
+      const responseData =
+        await response.json();
 
       if (!response.ok) {
 
         if (response.status === 409) {
-
-          showWarning(data.message);
-
+          showWarning(responseData.message);
         } else {
-
           showError(
-            data.message ||
+            responseData.message ||
             "No se pudo registrar el estudiante."
           );
-
         }
 
         return;
@@ -169,7 +181,7 @@ export function useFormEst() {
 
       console.log(
         "Estudiante registrado:",
-        data
+        responseData
       );
 
       showSuccess(
@@ -186,22 +198,15 @@ export function useFormEst() {
       showError(
         "No se pudo conectar con el servidor."
       );
-
     }
-
   };
 
-
   return {
-
     formData,
     carreras,
     semestres,
     alert,
     handleChange,
-    handleFileChange,
     handleSubmit,
-
   };
-
 }

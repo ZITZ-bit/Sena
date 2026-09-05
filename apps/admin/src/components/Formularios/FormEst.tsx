@@ -1,29 +1,30 @@
 'use client'
 
-/* Componentes De Next */
+/* Librerias */
 
-import { useState } from "react";
 import "boxicons/css/boxicons.min.css";
 
 /* Componentes De Next */
 
-import Alert from "./Alert";
+import { useState } from "react";
+
+/* Componentes De Next */
+
+import Alert from "../Alertas/Alert";
 
 /* Hooks */
 
-import { useSideBar } from "../hooks/useSidebar";
-import { useFormEst } from "../hooks/useFormEst"; 
+import { useSideBar } from "@/hooks/Global/useSidebar";
+import { useFormEst } from "@/hooks/Estudiantes/useFormEst"; 
 
 function FormEst() {
 
+  const { formData, alert, carreras, semestres,handleChange, handleSubmit } = useFormEst();
   const { open } = useSideBar();
 
-  const { formData, alert, carreras, semestres,
-        handleChange, handleFileChange, handleSubmit } = useFormEst();
-
   return (
-    <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 overflow-x-hidden`}>
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className={`transition-all duration-300 ${open ? "ml-72" : "ml-20"} min-h-screen bg-gray-50 p-8 overflow-x-hidden`}>
+      <div className="max-w-7xl mx-auto bg-white/90 rounded-xl shadow-lg p-6 border border-gray-200">
 
         <form className="space-y-6" onSubmit={handleSubmit}>
 
@@ -33,22 +34,18 @@ function FormEst() {
               Registro de estudiantes
             </h2>
 
-            {
-              alert.show && (
-                
-                <Alert type={alert.type} message={alert.message}/>
-
-              )
-            }
+            {alert.show && (  
+              <Alert type={alert.type} message={alert.message}/>
+            )}
 
             <div className="form-group">
               <input id="nombre" type="text" value={formData.nombre} onChange={handleChange} placeholder="Ingrese el nombre" className="form-input"/>
-              <label htmlFor="nombre" className="form-label">Nombre</label>
+              <label htmlFor="nombre" className="form-label">Nombres</label>
             </div>
 
             <div className="form-group">
               <input id="apellido" type="text" value={formData.apellido} onChange={handleChange} placeholder="Ingrese el apellido" className="form-input"/>
-              <label htmlFor="apellido" className="form-label">Apellido</label>
+              <label htmlFor="apellido" className="form-label">Apellidos</label>
             </div>
 
             <div className="form-group">
@@ -110,23 +107,16 @@ function FormEst() {
 
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">Foto de perfil</label>
-              <input type="file" onChange={handleFileChange} className="w-full rounded-lg border border-gray-300 px-3 py-2"/>
-            </div>
-
           </section>
 
           <section className="flex justify-end gap-3 border-t border-gray-200 pt-5">
-
-            <button type="reset" className="rounded-lg border border-gray-300 px-5 py-2 hover:bg-gray-100 transition-colors">
+            <button type="reset" className="cursor-pointer rounded-lg border bg-red-400 px-5 py-2 text-white hover:bg-red-500 transition-colors">
               Cancelar
             </button>
 
-            <button type="submit" className="rounded-lg bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 transition-colors">
+            <button type="submit" className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 transition-colors">
               Registrar estudiante
             </button>
-
           </section>
 
         </form>

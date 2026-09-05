@@ -1,8 +1,6 @@
 'use client'
 
-import "boxicons/css/boxicons.min.css";
-
-import { useSideBar } from "../hooks/useSidebar";
+import { useSideBar } from "@/hooks/Global/useSidebar";
 
 interface SideBarProps {
   onSelect: (section: string) => void;
@@ -10,11 +8,7 @@ interface SideBarProps {
 
 function SideBar({onSelect}: SideBarProps) {
 
-  const {
-    open,
-    menuItems,
-    toggleSideBar
-  } = useSideBar();
+  const { open, menuItems, toggleSideBar } = useSideBar();
 
   return (
     <aside className="fixed left-0 top-0 h-screen flex z-50">

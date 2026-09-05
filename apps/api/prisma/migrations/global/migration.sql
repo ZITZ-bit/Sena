@@ -1,3 +1,6 @@
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
+
 -- CreateTable
 CREATE TABLE "carreras" (
     "id" SERIAL NOT NULL,
@@ -83,6 +86,34 @@ CREATE TABLE "usuarios" (
     CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "asignacion_profesor" (
+    "id" SERIAL NOT NULL,
+    "profesor_id" INTEGER NOT NULL,
+    "materia_id" INTEGER NOT NULL,
+    "seccion_id" INTEGER NOT NULL,
+    "semestre_id" INTEGER NOT NULL,
+
+    CONSTRAINT "asignacion_profesor_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "profesores" (
+    "id" SERIAL NOT NULL,
+    "nombre" VARCHAR(100) NOT NULL,
+    "apellido" VARCHAR(100) NOT NULL,
+    "correo" VARCHAR(150) NOT NULL,
+    "fecha_nacimiento" DATE NOT NULL,
+    "telefono" VARCHAR(30),
+    "direccion" TEXT,
+    "foto_perfil" TEXT,
+    "usuario_id" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "profesores_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "estudiantes_correo_key" ON "estudiantes"("correo");
 
@@ -97,6 +128,12 @@ CREATE UNIQUE INDEX "roles_nombre_key" ON "roles"("nombre");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "usuarios_cedula_key" ON "usuarios"("cedula");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "profesores_correo_key" ON "profesores"("correo");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "profesores_usuario_id_key" ON "profesores"("usuario_id");
 
 -- AddForeignKey
 ALTER TABLE "estudiantes" ADD CONSTRAINT "estudiantes_carrera_id_fkey" FOREIGN KEY ("carrera_id") REFERENCES "carreras"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -118,3 +155,18 @@ ALTER TABLE "usuario_roles" ADD CONSTRAINT "usuario_roles_rol_id_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "usuario_roles" ADD CONSTRAINT "usuario_roles_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "usuarios"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "asignacion_profesor" ADD CONSTRAINT "fk_asignacion_materia" FOREIGN KEY ("materia_id") REFERENCES "materias"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "asignacion_profesor" ADD CONSTRAINT "fk_asignacion_profesor" FOREIGN KEY ("profesor_id") REFERENCES "profesores"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "asignacion_profesor" ADD CONSTRAINT "fk_asignacion_seccion" FOREIGN KEY ("seccion_id") REFERENCES "secciones"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "asignacion_profesor" ADD CONSTRAINT "fk_asignacion_semestre" FOREIGN KEY ("semestre_id") REFERENCES "semestres"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "profesores" ADD CONSTRAINT "fk_profesor_usuario" FOREIGN KEY ("usuario_id") REFERENCES "usuarios"("id") ON DELETE CASCADE ON UPDATE NO ACTION;

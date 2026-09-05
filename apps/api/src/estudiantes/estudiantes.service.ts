@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+  BadRequestException,
+} from '@nestjs/common';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
@@ -8,15 +13,15 @@ import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 
 @Injectable()
 export class EstudiantesService {
-
   constructor(
     private readonly prisma: PrismaService,
     private readonly usuariosService: UsuariosService,
   ) {}
 
   // Registrar estudiante
-  async create(createEstudianteDto: CreateEstudianteDto) {
-
+  async create(
+    createEstudianteDto: CreateEstudianteDto,
+  ) {
     const {
       cedula,
       password,
@@ -26,13 +31,31 @@ export class EstudiantesService {
       fecha_nacimiento,
       telefono,
       direccion,
-      foto_perfil,
       semestre_id,
       carrera_id,
     } = createEstudianteDto;
 
-    return this.prisma.$transaction(async (tx) => {
+    // FormData envía estos valores como String,
+    // pero Prisma necesita Int
+    const semestreId = semestre_id
+      ? Number(semestre_id)
+      : null;
 
+    const carreraId = carrera_id
+      ? Number(carrera_id)
+      : null;
+
+    const fechaNacimiento = fecha_nacimiento
+      ? new Date(fecha_nacimiento)
+      : null;
+
+    if (!fechaNacimiento || Number.isNaN(fechaNacimiento.getTime())) {
+      throw new BadRequestException(
+        'La fecha de nacimiento es inválida.',
+      );
+    }
+
+    return this.prisma.$transaction(async (tx) => {
       // Verificar si la cédula ya existe
       const usuarioExistente = await tx.usuarios.findUnique({
         where: {
@@ -47,11 +70,12 @@ export class EstudiantesService {
       }
 
       // Verificar si el correo ya existe
-      const estudianteExistente = await tx.estudiantes.findUnique({
-        where: {
-          correo,
-        },
-      });
+      const estudianteExistente =
+        await tx.estudiantes.findUnique({
+          where: {
+            correo,
+          },
+        });
 
       if (estudianteExistente) {
         throw new ConflictException(
@@ -73,13 +97,12 @@ export class EstudiantesService {
           nombre,
           apellido,
           correo,
-          fecha_nacimiento: new Date(fecha_nacimiento),
+          fecha_nacimiento: fechaNacimiento,
           telefono,
           direccion,
-          foto_perfil,
           usuario_id: usuario.id,
-          semestre_id,
-          carrera_id,
+          semestre_id: semestreId,
+          carrera_id: carreraId,
         },
       });
 
@@ -114,42 +137,33 @@ export class EstudiantesService {
         },
         rol: rolEstudiante.nombre,
       };
-
     });
-
   }
 
   // Obtener todos los estudiantes
   async findAll() {
-
     return this.prisma.estudiantes.findMany({
-
       include: {
         carreras: true,
         semestres: true,
         usuarios: true,
       },
-
     });
-
   }
 
   // Buscar estudiante por ID
   async findOne(id: number) {
-
-    const estudiante = await this.prisma.estudiantes.findUnique({
-
-      where: {
-        id,
-      },
-
-      include: {
-        carreras: true,
-        semestres: true,
-        usuarios: true,
-      },
-
-    });
+    const estudiante =
+      await this.prisma.estudiantes.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          carreras: true,
+          semestres: true,
+          usuarios: true,
+        },
+      });
 
     if (!estudiante) {
       throw new NotFoundException(
@@ -158,7 +172,6 @@ export class EstudiantesService {
     }
 
     return estudiante;
-
   }
 
   // Actualizar estudiante
@@ -166,30 +179,65 @@ export class EstudiantesService {
     id: number,
     updateEstudianteDto: UpdateEstudianteDto,
   ) {
-
     await this.findOne(id);
 
     return this.prisma.estudiantes.update({
-
       where: {
         id,
       },
-
       data: updateEstudianteDto,
-
     });
-
   }
 
   // Desactivar estudiante
   async disable(id: number) {
-
     const estudiante = await this.findOne(id);
 
     return this.usuariosService.disableUser(
       estudiante.usuario_id,
     );
-
   }
 
+  // Eliminar estudiante
+  async remove(id: number) {
+    return this.prisma.$transaction(async (tx) => {
+      const estudiante =
+        await tx.estudiantes.findUnique({
+          where: {
+            id,
+          },
+        });
+
+      if (!estudiante) {
+        throw new NotFoundException(
+          'Estudiante no encontrado.',
+        );
+      }
+
+      // Eliminar roles del usuario
+      await tx.usuario_roles.deleteMany({
+        where: {
+          usuario_id: estudiante.usuario_id,
+        },
+      });
+
+      // Eliminar estudiante
+      await tx.estudiantes.delete({
+        where: {
+          id,
+        },
+      });
+
+      // Eliminar usuario
+      await tx.usuarios.delete({
+        where: {
+          id: estudiante.usuario_id,
+        },
+      });
+
+      return {
+        message: 'Estudiante eliminado correctamente.',
+      };
+    });
+  }
 }
