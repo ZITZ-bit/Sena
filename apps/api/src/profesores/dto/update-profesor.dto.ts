@@ -1,4 +1,11 @@
-import { IsDateString, IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsDateString,
+  IsEmail,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class UpdateProfesorDto {
   // Datos del usuario
@@ -40,5 +47,4 @@ export class UpdateProfesorDto {
   @IsOptional()
   @IsString()
   direccion?: string;
-
 }

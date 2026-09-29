@@ -1,7 +1,6 @@
 import { IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateRolDto {
-
   @IsString()
   @MaxLength(50)
   nombre!: string;
@@ -9,5 +8,4 @@ export class CreateRolDto {
   @IsOptional()
   @IsString()
   descripcion?: string;
-
 }

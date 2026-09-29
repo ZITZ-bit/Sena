@@ -8,11 +8,7 @@ import { ProfesoresController } from './profesores.controller';
 import { ProfesoresService } from './profesores.service';
 
 @Module({
-  imports: [
-    PrismaModule,
-    UsuariosModule,
-    RolesModule,
-  ],
+  imports: [PrismaModule, UsuariosModule, RolesModule],
   controllers: [ProfesoresController],
   providers: [ProfesoresService],
   exports: [ProfesoresService],

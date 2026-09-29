@@ -19,9 +19,7 @@ export class EstudiantesService {
   ) {}
 
   // Registrar estudiante
-  async create(
-    createEstudianteDto: CreateEstudianteDto,
-  ) {
+  async create(createEstudianteDto: CreateEstudianteDto) {
     const {
       cedula,
       password,
@@ -37,22 +35,16 @@ export class EstudiantesService {
 
     // FormData envía estos valores como String,
     // pero Prisma necesita Int
-    const semestreId = semestre_id
-      ? Number(semestre_id)
-      : null;
+    const semestreId = semestre_id ? Number(semestre_id) : null;
 
-    const carreraId = carrera_id
-      ? Number(carrera_id)
-      : null;
+    const carreraId = carrera_id ? Number(carrera_id) : null;
 
     const fechaNacimiento = fecha_nacimiento
       ? new Date(fecha_nacimiento)
       : null;
 
     if (!fechaNacimiento || Number.isNaN(fechaNacimiento.getTime())) {
-      throw new BadRequestException(
-        'La fecha de nacimiento es inválida.',
-      );
+      throw new BadRequestException('La fecha de nacimiento es inválida.');
     }
 
     return this.prisma.$transaction(async (tx) => {
@@ -64,23 +56,18 @@ export class EstudiantesService {
       });
 
       if (usuarioExistente) {
-        throw new ConflictException(
-          'La cédula ya está registrada.',
-        );
+        throw new ConflictException('La cédula ya está registrada.');
       }
 
       // Verificar si el correo ya existe
-      const estudianteExistente =
-        await tx.estudiantes.findUnique({
-          where: {
-            correo,
-          },
-        });
+      const estudianteExistente = await tx.estudiantes.findUnique({
+        where: {
+          correo,
+        },
+      });
 
       if (estudianteExistente) {
-        throw new ConflictException(
-          'El correo ya está registrado.',
-        );
+        throw new ConflictException('El correo ya está registrado.');
       }
 
       // Crear usuario
@@ -114,9 +101,7 @@ export class EstudiantesService {
       });
 
       if (!rolEstudiante) {
-        throw new NotFoundException(
-          'El rol Estudiante no existe.',
-        );
+        throw new NotFoundException('El rol Estudiante no existe.');
       }
 
       // Asignar rol Estudiante al usuario
@@ -153,32 +138,26 @@ export class EstudiantesService {
 
   // Buscar estudiante por ID
   async findOne(id: number) {
-    const estudiante =
-      await this.prisma.estudiantes.findUnique({
-        where: {
-          id,
-        },
-        include: {
-          carreras: true,
-          semestres: true,
-          usuarios: true,
-        },
-      });
+    const estudiante = await this.prisma.estudiantes.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        carreras: true,
+        semestres: true,
+        usuarios: true,
+      },
+    });
 
     if (!estudiante) {
-      throw new NotFoundException(
-        'Estudiante no encontrado.',
-      );
+      throw new NotFoundException('Estudiante no encontrado.');
     }
 
     return estudiante;
   }
 
   // Actualizar estudiante
-  async update(
-    id: number,
-    updateEstudianteDto: UpdateEstudianteDto,
-  ) {
+  async update(id: number, updateEstudianteDto: UpdateEstudianteDto) {
     await this.findOne(id);
 
     return this.prisma.estudiantes.update({
@@ -193,25 +172,20 @@ export class EstudiantesService {
   async disable(id: number) {
     const estudiante = await this.findOne(id);
 
-    return this.usuariosService.disableUser(
-      estudiante.usuario_id,
-    );
+    return this.usuariosService.disableUser(estudiante.usuario_id);
   }
 
   // Eliminar estudiante
   async remove(id: number) {
     return this.prisma.$transaction(async (tx) => {
-      const estudiante =
-        await tx.estudiantes.findUnique({
-          where: {
-            id,
-          },
-        });
+      const estudiante = await tx.estudiantes.findUnique({
+        where: {
+          id,
+        },
+      });
 
       if (!estudiante) {
-        throw new NotFoundException(
-          'Estudiante no encontrado.',
-        );
+        throw new NotFoundException('Estudiante no encontrado.');
       }
 
       // Eliminar roles del usuario

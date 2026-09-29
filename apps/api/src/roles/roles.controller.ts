@@ -5,15 +5,10 @@ import { CreateRolDto } from './dto/create-rol.dto';
 
 @Controller('roles')
 export class RolesController {
-
-  constructor(
-    private readonly rolesService: RolesService,
-  ) {}
+  constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  create(
-    @Body() createRolDto: CreateRolDto,
-  ) {
+  create(@Body() createRolDto: CreateRolDto) {
     return this.rolesService.create(createRolDto);
   }
 
@@ -22,5 +17,4 @@ export class RolesController {
   findAll() {
     return this.rolesService.findAll();
   }
-
 }

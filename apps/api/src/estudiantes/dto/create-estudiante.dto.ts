@@ -1,7 +1,14 @@
-import { IsDateString, IsEmail, IsInt, IsOptional, IsString, MaxLength, MinLength,} from 'class-validator';
+import {
+  IsDateString,
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateEstudianteDto {
-
   // Datos del usuario
   @IsString()
   @MinLength(6)
@@ -43,5 +50,4 @@ export class CreateEstudianteDto {
   @IsOptional()
   @IsInt()
   carrera_id?: number;
-
 }

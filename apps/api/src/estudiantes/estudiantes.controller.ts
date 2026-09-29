@@ -15,9 +15,7 @@ import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 
 @Controller('estudiantes')
 export class EstudiantesController {
-  constructor(
-    private readonly estudiantesService: EstudiantesService,
-  ) {}
+  constructor(private readonly estudiantesService: EstudiantesService) {}
 
   // Registrar estudiante
   @Post()
@@ -25,9 +23,7 @@ export class EstudiantesController {
     @Body()
     createEstudianteDto: CreateEstudianteDto,
   ) {
-    return this.estudiantesService.create(
-      createEstudianteDto,
-    );
+    return this.estudiantesService.create(createEstudianteDto);
   }
 
   // Obtener todos los estudiantes
@@ -38,12 +34,8 @@ export class EstudiantesController {
 
   // Buscar estudiante por ID
   @Get(':id')
-  findOne(
-    @Param('id') id: string,
-  ) {
-    return this.estudiantesService.findOne(
-      +id,
-    );
+  findOne(@Param('id') id: string) {
+    return this.estudiantesService.findOne(+id);
   }
 
   // Actualizar estudiante
@@ -54,19 +46,12 @@ export class EstudiantesController {
     @Body()
     updateEstudianteDto: UpdateEstudianteDto,
   ) {
-    return this.estudiantesService.update(
-      +id,
-      updateEstudianteDto,
-    );
+    return this.estudiantesService.update(+id, updateEstudianteDto);
   }
 
   // Eliminar estudiante
   @Delete(':id')
-  remove(
-    @Param('id') id: string,
-  ) {
-    return this.estudiantesService.remove(
-      +id,
-    );
+  remove(@Param('id') id: string) {
+    return this.estudiantesService.remove(+id);
   }
 }

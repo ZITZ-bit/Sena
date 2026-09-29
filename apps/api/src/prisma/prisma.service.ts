@@ -9,13 +9,17 @@ const envPath = join(__dirname, '..', '..', 'prisma', '.env');
 config({ path: envPath });
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
   constructor() {
     const connectionString = process.env.DATABASE_URL;
 
     if (typeof connectionString !== 'string' || connectionString.length === 0) {
-      throw new Error('DATABASE_URL no está definida o no es una cadena válida');
+      throw new Error(
+        'DATABASE_URL no está definida o no es una cadena válida',
+      );
     }
 
     const adapter = new PrismaPg({

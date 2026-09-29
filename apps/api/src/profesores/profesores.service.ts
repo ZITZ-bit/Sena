@@ -1,5 +1,11 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProfesorDto } from './dto/create-profesor.dto';
 import { UpdateProfesorDto } from './dto/update-profesor.dto';
@@ -23,9 +29,7 @@ export class ProfesoresService {
     const fechaNacimiento = new Date(fecha_nacimiento);
 
     if (Number.isNaN(fechaNacimiento.getTime())) {
-      throw new BadRequestException(
-        'La fecha de nacimiento es inválida.',
-      );
+      throw new BadRequestException('La fecha de nacimiento es inválida.');
     }
 
     return this.prisma.$transaction(async (tx) => {
@@ -35,21 +39,16 @@ export class ProfesoresService {
       });
 
       if (usuarioExistente) {
-        throw new ConflictException(
-          'La cédula ya está registrada.',
-        );
+        throw new ConflictException('La cédula ya está registrada.');
       }
 
       // Verificar correo
-      const profesorExistente =
-        await tx.profesores.findUnique({
-          where: { correo },
-        });
+      const profesorExistente = await tx.profesores.findUnique({
+        where: { correo },
+      });
 
       if (profesorExistente) {
-        throw new ConflictException(
-          'El correo ya está registrado.',
-        );
+        throw new ConflictException('El correo ya está registrado.');
       }
 
       // Crear usuario
@@ -79,9 +78,7 @@ export class ProfesoresService {
       });
 
       if (!rolProfesor) {
-        throw new NotFoundException(
-          'El rol Profesor no existe.',
-        );
+        throw new NotFoundException('El rol Profesor no existe.');
       }
 
       // Asignar rol al usuario
@@ -122,18 +119,13 @@ export class ProfesoresService {
     });
 
     if (!profesor) {
-      throw new NotFoundException(
-        'Profesor no encontrado.',
-      );
+      throw new NotFoundException('Profesor no encontrado.');
     }
 
     return profesor;
   }
 
-  async update(
-    id: number,
-    updateProfesorDto: UpdateProfesorDto,
-  ) {
+  async update(id: number, updateProfesorDto: UpdateProfesorDto) {
     const profesor = await this.findOne(id);
 
     const {
@@ -162,7 +154,7 @@ export class ProfesoresService {
       }
 
       // Preparar datos del profesor
-      const datosProfesor: any = {
+      const datosProfesor: Prisma.profesoresUpdateInput = {
         ...(nombre !== undefined && { nombre }),
         ...(apellido !== undefined && { apellido }),
         ...(correo !== undefined && { correo }),
@@ -174,20 +166,17 @@ export class ProfesoresService {
         const fechaNacimiento = new Date(fecha_nacimiento);
 
         if (Number.isNaN(fechaNacimiento.getTime())) {
-          throw new BadRequestException(
-            'La fecha de nacimiento es inválida.',
-          );
+          throw new BadRequestException('La fecha de nacimiento es inválida.');
         }
 
         datosProfesor.fecha_nacimiento = fechaNacimiento;
       }
 
       // Actualizar profesor
-      const profesorActualizado =
-        await tx.profesores.update({
-          where: { id },
-          data: datosProfesor,
-        });
+      const profesorActualizado = await tx.profesores.update({
+        where: { id },
+        data: datosProfesor,
+      });
 
       return {
         message: 'Profesor actualizado correctamente.',
@@ -203,9 +192,7 @@ export class ProfesoresService {
       });
 
       if (!profesor) {
-        throw new NotFoundException(
-          'Profesor no encontrado.',
-        );
+        throw new NotFoundException('Profesor no encontrado.');
       }
 
       // Eliminar roles del usuario

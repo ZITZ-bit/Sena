@@ -2,6 +2,32 @@ import { useEffect, useState } from "react";
 
 import { PerfilData } from "../Global/usePerfilCard";
 
+interface EstudianteApi {
+
+  id: number;
+
+  nombre: string;
+
+  apellido: string;
+
+  cedula?: string;
+
+  telefono?: string | null;
+
+  foto_perfil?: string | null;
+
+  estado?: boolean;
+
+  usuarios?: {
+
+    cedula?: string;
+
+    estado?: boolean;
+
+  };
+
+}
+
 export function useEstudiante() {
 
   const [estudiantes, setEstudiantes] = useState<PerfilData[]>([]);
@@ -26,7 +52,8 @@ export function useEstudiante() {
           );
         }
 
-        const data = await response.json();
+        const data: EstudianteApi[] =
+          await response.json();
 
         console.log(
           "Estudiantes recibidos:",
@@ -34,7 +61,7 @@ export function useEstudiante() {
         );
 
         const estudiantesNormalizados = data.map(
-          (estudiante: any) => ({
+          (estudiante: EstudianteApi) => ({
 
             ...estudiante,
 
