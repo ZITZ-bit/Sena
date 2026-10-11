@@ -7,19 +7,9 @@ import { UsuariosModule } from '../usuarios/usuarios.module';
 import { RolesModule } from '../roles/roles.module';
 
 @Module({
-  imports: [
-    PrismaModule,
-    UsuariosModule,
-    RolesModule,
-  ],
-  controllers: [
-    EstudiantesController,
-  ],
-  providers: [
-    EstudiantesService,
-  ],
-  exports: [
-    EstudiantesService,
-  ],
+  imports: [PrismaModule, UsuariosModule, RolesModule],
+  controllers: [EstudiantesController],
+  providers: [EstudiantesService],
+  exports: [EstudiantesService],
 })
 export class EstudiantesModule {}

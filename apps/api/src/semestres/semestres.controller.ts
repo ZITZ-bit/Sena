@@ -1,4 +1,12 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
 import { SemestresService } from './semestres.service';
 
@@ -7,16 +15,11 @@ import { UpdateSemestreDto } from './dto/update-semestre.dto';
 
 @Controller('semestres')
 export class SemestresController {
-
-  constructor(
-    private readonly semestresService: SemestresService,
-  ) {}
+  constructor(private readonly semestresService: SemestresService) {}
 
   // Crear semestre
   @Post()
-  create(
-    @Body() createSemestreDto: CreateSemestreDto,
-  ) {
+  create(@Body() createSemestreDto: CreateSemestreDto) {
     return this.semestresService.create(createSemestreDto);
   }
 
@@ -28,9 +31,7 @@ export class SemestresController {
 
   // Buscar un semestre por ID
   @Get(':id')
-  findOne(
-    @Param('id') id: string,
-  ) {
+  findOne(@Param('id') id: string) {
     return this.semestresService.findOne(+id);
   }
 
@@ -40,18 +41,12 @@ export class SemestresController {
     @Param('id') id: string,
     @Body() updateSemestreDto: UpdateSemestreDto,
   ) {
-    return this.semestresService.update(
-      +id,
-      updateSemestreDto,
-    );
+    return this.semestresService.update(+id, updateSemestreDto);
   }
 
   // Eliminar semestre
   @Delete(':id')
-  remove(
-    @Param('id') id: string,
-  ) {
+  remove(@Param('id') id: string) {
     return this.semestresService.remove(+id);
   }
-
 }

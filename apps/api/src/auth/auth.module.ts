@@ -8,19 +8,9 @@ import { UsuariosModule } from '../usuarios/usuarios.module';
 import { RolesModule } from '../roles/roles.module';
 
 @Module({
-  imports: [
-    PrismaModule,
-    UsuariosModule,
-    RolesModule,
-  ],
-  controllers: [
-    AuthController,
-  ],
-  providers: [
-    AuthService,
-  ],
-  exports: [
-    AuthService,
-  ],
+  imports: [PrismaModule, UsuariosModule, RolesModule],
+  controllers: [AuthController],
+  providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
