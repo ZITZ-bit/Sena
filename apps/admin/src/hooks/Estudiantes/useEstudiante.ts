@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { PerfilData } from "../Global/usePerfilCard";
+import { API_URL } from "@/lib/api";
 
 interface EstudianteApi {
 
@@ -43,7 +44,7 @@ export function useEstudiante() {
       try {
 
         const response = await fetch(
-          "http://localhost:3002/estudiantes"
+          `${API_URL}/estudiantes`
         );
 
         if (!response.ok) {
@@ -118,7 +119,7 @@ export function useEstudiante() {
     try {
 
       const response = await fetch(
-        `http://localhost:3002/estudiantes/${id}`,
+        `${API_URL}/estudiantes/${id}`,
         {
           method: "DELETE",
         }

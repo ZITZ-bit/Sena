@@ -4,6 +4,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { useSideBar } from "@/hooks/Global/useSidebar";
 import { TarjetaPerfilProps } from "@/hooks/Global/usePerfilCard";
+import { API_URL } from "@/lib/api";
 
 export default function TarjetaPerfil({ perfil, onEdit, onDelete }: TarjetaPerfilProps) {
 
@@ -12,7 +13,7 @@ export default function TarjetaPerfil({ perfil, onEdit, onDelete }: TarjetaPerfi
 
   const fotoPerfilSrc =
     perfil.foto_perfil?.startsWith("/uploads/")
-      ? `http://localhost:3002${perfil.foto_perfil}`
+      ? `${API_URL}${perfil.foto_perfil}`
       : perfil.foto_perfil || "/Image/Perfil_Default.jpg";
 
   return (

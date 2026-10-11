@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useAlert } from "../Global/useAlert";
+import { API_URL } from "@/lib/api";
 
 interface Carrera {
   id: number;
@@ -46,8 +47,8 @@ export function useFormEst() {
           carrerasResponse,
           semestresResponse,
         ] = await Promise.all([
-          fetch("http://localhost:3002/carreras"),
-          fetch("http://localhost:3002/semestres"),
+          fetch(`${API_URL}/carreras`),
+          fetch(`${API_URL}/semestres`),
         ]);
 
         if (
@@ -150,7 +151,7 @@ export function useFormEst() {
       };
 
       const response = await fetch(
-        "http://localhost:3002/estudiantes",
+        `${API_URL}/estudiantes`,
         {
           method: "POST",
 

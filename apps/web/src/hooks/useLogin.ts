@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
 
 export function useLogin() {
 
@@ -42,7 +43,7 @@ export function useLogin() {
     try {
 
       const response = await fetch(
-        "http://localhost:3002/auth/login",
+        `${API_URL}/auth/login`,
         {
           method: "POST",
 

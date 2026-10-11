@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAlert } from "../Global/useAlert";
+import { API_URL } from "@/lib/api";
 
 export function useFormProf() {
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ export function useFormProf() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3002/profesores", {
+      const response = await fetch(`${API_URL}/profesores`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
