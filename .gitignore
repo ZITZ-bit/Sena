@@ -6,6 +6,9 @@ dist
 .next
 out
 
+# typescript incremental build cache
+*.tsbuildinfo
+
 # env
 .env
 .env.local
