@@ -14,7 +14,7 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor() {
-    const dbTarget = process.env.DB_TARGET || 'local';
+    const dbTarget = process.env.DB_TARGET || 'neon';
     const connectionString =
       dbTarget === 'local'
         ? process.env.DATABASE_URL_LOCAL
