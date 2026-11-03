@@ -31,25 +31,42 @@ export default function Academico() {
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([
-      api.carreras(),
-      api.materias(),
-      api.secciones(),
-      api.semestres(),
-    ])
-      .then(([c, m, s, sem]) => {
+    const cargarDatos = async () => {
+      try {
+        const [carrerasRes, materiasRes, seccionesRes, semestresRes] =
+          await Promise.allSettled([
+            api.carreras(),
+            api.materias(),
+            api.secciones(),
+            api.semestres(),
+          ]);
+
         if (!mounted) return;
-        setCarreras(c);
-        setMaterias(m);
-        setSecciones(s);
-        setSemestres(sem);
+
+        if (carrerasRes.status === "fulfilled") {
+          setCarreras(carrerasRes.value);
+        }
+        if (materiasRes.status === "fulfilled") {
+          setMaterias(materiasRes.value);
+        }
+        if (seccionesRes.status === "fulfilled") {
+          setSecciones(seccionesRes.value);
+        }
+        if (semestresRes.status === "fulfilled") {
+          setSemestres(semestresRes.value);
+        }
+
         setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         if (!mounted) return;
-        setError(err.message);
+        setError(
+          err instanceof Error ? err.message : "Error inesperado al cargar datos."
+        );
         setLoading(false);
-      });
+      }
+    };
+
+    cargarDatos();
 
     return () => {
       mounted = false;

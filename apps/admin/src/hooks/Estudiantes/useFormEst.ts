@@ -43,41 +43,27 @@ export function useFormEst() {
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        const [
-          carrerasResponse,
-          semestresResponse,
-        ] = await Promise.all([
+        const [carrerasRes, semestresRes] = await Promise.allSettled([
           fetch(`${API_URL}/carreras`),
           fetch(`${API_URL}/semestres`),
         ]);
 
-        if (
-          !carrerasResponse.ok ||
-          !semestresResponse.ok
-        ) {
-          throw new Error(
-            "Error al obtener carreras o semestres"
-          );
+        if (carrerasRes.status === "fulfilled" && carrerasRes.value.ok) {
+          const carrerasData = await carrerasRes.value.json();
+          setCarreras(carrerasData);
+        } else {
+          console.warn("No se pudieron cargar las carreras.");
         }
 
-        const carrerasData =
-          await carrerasResponse.json();
-
-        const semestresData =
-          await semestresResponse.json();
-
-        setCarreras(carrerasData);
-        setSemestres(semestresData);
-
+        if (semestresRes.status === "fulfilled" && semestresRes.value.ok) {
+          const semestresData = await semestresRes.value.json();
+          setSemestres(semestresData);
+        } else {
+          console.warn("No se pudieron cargar los semestres.");
+        }
       } catch (error) {
-        console.error(
-          "Error cargando carreras y semestres:",
-          error
-        );
-
-        showError(
-          "No se pudieron cargar las carreras y semestres."
-        );
+        console.error("Error cargando carreras y semestres:", error);
+        showError("No se pudieron cargar las carreras y semestres.");
       }
     };
 
