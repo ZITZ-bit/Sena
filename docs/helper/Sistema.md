@@ -6,8 +6,8 @@ Monorepo project built with Turbo, containing a web app, admin panel, API, and s
 
 | Project | Description | Tech Stack |
 |---------|-------------|------------|
-| `apps/web` | Web application | Next.js 16, React 19, Tailwind CSS v4 |
-| `apps/admin` | Admin panel | Next.js 16, React 19, Tailwind CSS v4 |
+| `apps/gestion/estudiante` | Web application (estudiantes) | Next.js 16, React 19, Tailwind CSS v4 |
+| `apps/gestion/profesor` | Admin panel (profesores) | Next.js 16, React 19, Tailwind CSS v4 |
 | `apps/api` | REST API | NestJS, TypeScript, Prisma |
 | `packages/config` | Configuration utilities | - |
 | `packages/database` | SQL schemas | PostgreSQL |
@@ -30,11 +30,11 @@ npm run dev
 ### Individual apps
 
 ```bash
-# Web app (port 3000)
-npm run dev:web
+# Estudiantes (puerto 3000)
+npm run dev:estudiante
 
-# Admin panel
-npm run dev:admin
+# Profesores (puerto 3001)
+npm run dev:profesor
 
 # API server
 npm run dev:api
@@ -45,8 +45,8 @@ npm run dev:api
 ```bash
 npm run build
 # Or build individually:
-npm run build:web
-npm run build:admin
+npm run build:estudiante
+npm run build:profesor
 npm run build:api
 ```
 

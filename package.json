@@ -7,6 +7,7 @@
 
   "workspaces": [
     "apps/*",
+    "apps/gestion/*",
     "packages/*"
   ],
 
@@ -17,12 +18,12 @@
     "lint": "turbo lint",
     "test": "turbo test",
 
-    "dev:web": "turbo dev --filter=web",
-    "dev:admin": "turbo dev --filter=admin",
+    "dev:estudiante": "turbo dev --filter=estudiante",
+    "dev:profesor": "turbo dev --filter=profesor",
     "dev:api": "turbo dev --filter=api",
 
-    "build:web": "turbo build --filter=web",
-    "build:admin": "turbo build --filter=admin",
+    "build:estudiante": "turbo build --filter=estudiante",
+    "build:profesor": "turbo build --filter=profesor",
     "build:api": "turbo build --filter=api"
   },
 
