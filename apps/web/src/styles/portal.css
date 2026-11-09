@@ -1,0 +1,595 @@
+body {
+  margin: 0;
+  background: #fff;
+  color: #172f4c;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.portal-container {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+.portal-topbar {
+  background: #122b48;
+  color: #e7edf4;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.portal-topbar__inner,
+.portal-topbar__links {
+  display: flex;
+  align-items: center;
+}
+
+.portal-topbar__inner {
+  min-height: 38px;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.portal-topbar__inner p {
+  margin: 0;
+  color: #c6d1de;
+}
+
+.portal-topbar__links {
+  gap: 10px;
+}
+
+.portal-topbar__links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.portal-topbar__links a:hover {
+  color: #f1b83f;
+}
+
+.portal-shortcuts {
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
+  background: #fff;
+}
+
+.portal-shortcuts__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  box-shadow: 0 15px 40px rgb(19 45 74 / 8%);
+}
+
+.portal-shortcut {
+  display: flex;
+  min-height: 130px;
+  align-items: center;
+  gap: 20px;
+  padding: 26px 30px;
+  color: #173451;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.portal-shortcut + .portal-shortcut {
+  border-left: 1px solid #e8edf2;
+}
+
+.portal-shortcut:hover {
+  transform: translateY(-4px);
+  background: #f9fafb;
+}
+
+.portal-shortcut__number {
+  align-self: flex-start;
+  padding-top: 3px;
+  color: #bd8320;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.portal-shortcut__copy {
+  display: grid;
+  gap: 7px;
+}
+
+.portal-shortcut__copy strong {
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.portal-shortcut__copy > span {
+  color: #718094;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.portal-shortcut__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  margin-left: auto;
+  border: 1px solid #e4e9ef;
+  border-radius: 50%;
+  color: #bd8320;
+  font-size: 18px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.portal-shortcut:hover .portal-shortcut__icon {
+  border-color: #173451;
+  background: #173451;
+  color: #fff;
+}
+
+.portal-section {
+  padding-block: 112px;
+}
+
+.portal-news {
+  background: #f7f8fa;
+}
+
+.portal-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 38px;
+}
+
+.portal-eyebrow {
+  margin: 0 0 14px;
+  color: #b47c1d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.portal-section-heading h2,
+.portal-cta h2 {
+  margin: 0;
+  color: #173451;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+}
+
+.portal-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #173451;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.portal-text-link:hover {
+  color: #b47c1d;
+}
+
+.portal-text-link span {
+  color: #b47c1d;
+  font-size: 17px;
+}
+
+.portal-news__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.portal-news-card {
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(19 45 74 / 4%);
+  transition:
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.portal-news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgb(19 45 74 / 10%);
+}
+
+.portal-news-card__image {
+  position: relative;
+  min-height: 230px;
+  background-color: #d7dfe8;
+  background-position: center;
+  background-size: cover;
+}
+
+.portal-news-card__image::after {
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgb(13 35 58 / 35%));
+  content: "";
+}
+
+.portal-news-card__image > span {
+  position: absolute;
+  z-index: 1;
+  bottom: 17px;
+  left: 18px;
+  padding: 8px 11px;
+  background: #f1b83f;
+  color: #173451;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.portal-news-card__body {
+  padding: 25px 24px 28px;
+}
+
+.portal-news-card__date {
+  margin: 0 0 12px;
+  color: #8491a0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.portal-news-card h3 {
+  min-height: 52px;
+  margin: 0;
+  color: #173451;
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
+}
+
+.portal-news-card__excerpt {
+  min-height: 63px;
+  margin: 13px 0 20px;
+  color: #718094;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.portal-about {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 87% 45%, rgb(44 79 113 / 55%), transparent 40%),
+    #122e4c;
+  color: white;
+}
+
+.portal-about::after {
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 490px;
+  height: 490px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 45px rgb(255 255 255 / 3%),
+    0 0 0 90px rgb(255 255 255 / 2%);
+  content: "";
+  pointer-events: none;
+}
+
+.portal-about__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 90px;
+  padding-block: 105px;
+}
+
+.portal-eyebrow--light {
+  color: #f1b83f;
+}
+
+.portal-about__copy h2 {
+  max-width: 600px;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(38px, 5vw, 59px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1.04;
+}
+
+.portal-about__copy > p:not(.portal-eyebrow) {
+  max-width: 510px;
+  margin: 22px 0 30px;
+  color: #c4d0dc;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.portal-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.portal-button:hover {
+  transform: translateY(-2px);
+}
+
+.portal-button--light {
+  background: #f1b83f;
+  color: #173451;
+}
+
+.portal-button--light:hover {
+  background: #fff;
+}
+
+.portal-about__stats {
+  display: grid;
+  gap: 0;
+}
+
+.portal-about__stats > div {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  align-items: center;
+  gap: 20px;
+  padding-block: 22px;
+  border-bottom: 1px solid rgb(255 255 255 / 15%);
+}
+
+.portal-about__stats > div:first-child {
+  border-top: 1px solid rgb(255 255 255 / 15%);
+}
+
+.portal-about__stats strong {
+  color: #f1b83f;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.portal-about__stats span {
+  max-width: 145px;
+  color: #d4dde6;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.portal-cta {
+  background: #f1b83f;
+}
+
+.portal-cta__inner {
+  display: flex;
+  min-height: 250px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding-block: 50px;
+}
+
+.portal-cta .portal-eyebrow {
+  color: #765315;
+}
+
+.portal-cta h2 {
+  max-width: 650px;
+  color: #173451;
+  font-size: clamp(30px, 4vw, 42px);
+}
+
+.portal-cta__inner > div > p:last-child {
+  margin: 14px 0 0;
+  color: #4f4b40;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.portal-button--dark {
+  flex: 0 0 auto;
+  background: #173451;
+  color: #fff;
+}
+
+.portal-button--dark:hover {
+  background: #fff;
+  color: #173451;
+}
+
+.portal-footer {
+  background: #0e233a;
+  color: #aebdcb;
+}
+
+.portal-footer__inner {
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.portal-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+}
+
+.portal-brand__mark {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1b83f;
+  color: #173451;
+  font-size: 16px;
+}
+
+.portal-brand__dot {
+  color: #f1b83f;
+}
+
+.portal-footer__inner > p,
+.portal-footer__inner > span {
+  margin: 0;
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .portal-shortcut {
+    gap: 12px;
+    padding-inline: 18px;
+  }
+
+  .portal-shortcut__icon {
+    display: none;
+  }
+
+  .portal-about__inner {
+    grid-template-columns: 1fr 0.8fr;
+    gap: 45px;
+  }
+}
+
+@media (max-width: 700px) {
+  .portal-container {
+    width: min(100% - 36px, 1240px);
+  }
+
+  .portal-topbar {
+    font-size: 10px;
+  }
+
+  .portal-topbar__inner {
+    min-height: 35px;
+  }
+
+  .portal-topbar__inner > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .portal-topbar__links > span,
+  .portal-topbar__links a:first-child {
+    display: none;
+  }
+
+  .portal-shortcuts__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-shortcut {
+    min-height: 98px;
+    padding: 20px 22px;
+  }
+
+  .portal-shortcut + .portal-shortcut {
+    border-top: 1px solid #e8edf2;
+    border-left: 0;
+  }
+
+  .portal-shortcut__icon {
+    display: grid;
+  }
+
+  .portal-section {
+    padding-block: 76px;
+  }
+
+  .portal-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 28px;
+  }
+
+  .portal-news__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .portal-news-card__image {
+    min-height: 220px;
+  }
+
+  .portal-news-card h3,
+  .portal-news-card__excerpt {
+    min-height: 0;
+  }
+
+  .portal-about__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-block: 76px;
+  }
+
+  .portal-about__stats > div {
+    grid-template-columns: 115px 1fr;
+  }
+
+  .portal-about__stats strong {
+    font-size: 32px;
+  }
+
+  .portal-cta__inner {
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 26px;
+    padding-block: 60px;
+  }
+
+  .portal-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding-block: 25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .portal-topbar__inner > p {
+    max-width: 215px;
+  }
+
+  .portal-topbar__links a:last-child {
+    font-size: 9px;
+  }
+}
