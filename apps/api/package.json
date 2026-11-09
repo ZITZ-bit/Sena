@@ -8,7 +8,7 @@
   "scripts": {
     "build": "prisma generate && tsc --project tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --prefer-ts-exts src/main.ts",
+    "dev": "PORT=3000 ts-node-dev --respawn --transpile-only --ignore-watch node_modules --prefer-ts-exts src/main.ts",
     "start": "nest start",
     "start:dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --prefer-ts-exts src/main.ts",
     "start:debug": "nest start --debug --watch",

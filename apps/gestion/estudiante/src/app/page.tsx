@@ -13,6 +13,7 @@ export default function Page() {
       onLogin={async (credentials) =>
         login(credentials.cedula, credentials.password)
       }
+
       onSuccess={(data) => {
         localStorage.setItem("usuario", JSON.stringify(data.usuario));
         setTimeout(() => {
