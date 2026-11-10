@@ -10,6 +10,9 @@ async function bootstrap() {
   const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
+    'http://localhost:3003',
+    'http://localhost:3001',
+    'http://localhost:3002',
   ].filter(Boolean);
 
   app.enableCors({
@@ -20,7 +23,7 @@ async function bootstrap() {
 
   app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
-  await app.listen(process.env.PORT || 3002, '0.0.0.0');
+  await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 
 bootstrap();

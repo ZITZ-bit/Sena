@@ -20,11 +20,11 @@ export function useFormEst() {
     nombre: "",
     apellido: "",
     cedula: "",
-    password: "",
     correo: "",
     fecha_nacimiento: "",
     telefono: "",
     direccion: "",
+    sexo: "",
     carrera_id: "",
     semestre_id: "",
   });
@@ -92,7 +92,6 @@ export function useFormEst() {
       formData.nombre,
       formData.apellido,
       formData.cedula,
-      formData.password,
       formData.correo,
       formData.fecha_nacimiento,
       formData.carrera_id,
@@ -117,13 +116,13 @@ export function useFormEst() {
         nombre: formData.nombre,
         apellido: formData.apellido,
         cedula: formData.cedula,
-        password: formData.password,
         correo: formData.correo,
         fecha_nacimiento: formData.fecha_nacimiento,
 
         telefono: formData.telefono || undefined,
 
         direccion: formData.direccion || undefined,
+        sexo: formData.sexo || undefined,
 
         carrera_id: formData.carrera_id
           ? Number(formData.carrera_id)
@@ -172,7 +171,8 @@ export function useFormEst() {
       );
 
       showSuccess(
-        "Estudiante registrado correctamente."
+        responseData.message ||
+          "Estudiante registrado. Se envió el enlace de activación al correo indicado."
       );
 
     } catch (error) {

@@ -40,7 +40,7 @@ const quickLinks = [
     number: "01",
     title: "Sistema académico",
     description: "Consulta tus materias, calificaciones y horario.",
-    href: "#sistema-academico",
+    href: "http://localhost:3003",
     icon: "↗",
   },
   {
@@ -172,7 +172,7 @@ export default function Portal() {
             <h2>¿Ya formas parte de nuestra comunidad?</h2>
             <p>Ingresa al sistema académico y mantente al día con tu vida universitaria.</p>
           </div>
-          <a className="portal-button portal-button--dark" href="#sistema-academico">
+          <a className="portal-button portal-button--dark" href="http://localhost:3003">
             Ir al sistema <span aria-hidden="true">↗</span>
           </a>
         </div>

@@ -22,13 +22,22 @@ export default function LoginPage({ onLogin, onSuccess, onError, className }: Lo
 
   return (
     <main className={`login-container ${className || ""}`}>
+      <a className="back-to-portal" href="http://localhost:3001">
+        <span aria-hidden="true">←</span>
+        Volver
+      </a>
 
       <section className="login-image">
         <div className="login-overlay">
           <div className="brand-showcase">
             <div className="brand-logo-accent"></div>
-            <h1 className="brand-title">SENA</h1>
-            <p className="brand-tagline">Construyendo un futuro de conocimiento y tecnología.</p>
+            <p className="brand-kicker">EDUCACIÓN QUE TRANSFORMA</p>
+            <h1 className="brand-title">
+              Tu futuro
+              <br />
+              <span>empieza aquí.</span>
+            </h1>
+            <p className="brand-tagline">Cada gran camino comienza con una oportunidad.</p>
           </div>
         </div>
       </section>

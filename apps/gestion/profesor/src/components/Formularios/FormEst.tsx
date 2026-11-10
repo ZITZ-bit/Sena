@@ -6,8 +6,6 @@ import "boxicons/css/boxicons.min.css";
 
 /* Componentes De Next */
 
-import { useState } from "react";
-
 /* Componentes De Next */
 
 import Alert from "../Alertas/Alert";
@@ -59,18 +57,29 @@ function FormEst() {
             </div>
 
             <div className="form-group">
-              <input id="password" type="password" value={formData.password} onChange={handleChange} placeholder="Ingrese la contraseña" className="form-input" />
-              <label htmlFor="password" className="form-label">Contraseña</label>
-            </div>
-
-            <div className="form-group">
               <input id="telefono" type="text" value={formData.telefono} onChange={handleChange} placeholder="0412-1234567" className="form-input"/>
               <label htmlFor="telefono" className="form-label">Teléfono</label>
             </div>
 
             <div className="form-group">
+              <input id="direccion" type="text" value={formData.direccion} onChange={handleChange} placeholder="Ingrese la dirección" className="form-input"/>
+              <label htmlFor="direccion" className="form-label">Dirección</label>
+            </div>
+
+            <div className="form-group">
               <input id="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleChange} className="form-input"/>
               <label htmlFor="fecha_nacimiento" className="form-label">Fecha de nacimiento</label>
+            </div>
+
+            <div className="form-group">
+              <select id="sexo" value={formData.sexo} onChange={handleChange} className="form-select">
+                <option value="">Seleccione el sexo</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Otro">Otro</option>
+                <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+              </select>
+              <label htmlFor="sexo" className="form-label">Sexo</label>
             </div>
 
             <div className="form-group">

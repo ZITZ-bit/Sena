@@ -31,6 +31,31 @@
 $ npm install
 ```
 
+## Student account activation
+
+Student registration sends a one-time activation link by email. Configure these
+environment variables in `apps/api/prisma/.env` before registering students:
+
+```env
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=
+SMTP_PASSWORD=
+SMTP_FROM=
+STUDENT_APP_URL=http://localhost:3003
+```
+
+`SMTP_USER` and `SMTP_PASSWORD` must either both be set or both be omitted.
+`SMTP_FROM` is the sender address. Activation links expire after 24 hours and
+can only be used once.
+
+Apply the Prisma migration before starting the API:
+
+```bash
+npx prisma migrate deploy --config apps/api/prisma/prisma.config.ts
+```
+
 ## Compile and run the project
 
 ```bash

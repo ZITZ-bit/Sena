@@ -1,28 +1,34 @@
 import {
   Injectable,
+  Logger,
   NotFoundException,
   ConflictException,
   BadRequestException,
+  ServiceUnavailableException,
 } from '@nestjs/common';
+import { createHash, randomBytes } from 'node:crypto';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
+import { MailService } from '../mail/mail.service';
 
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 
 @Injectable()
 export class EstudiantesService {
+  private readonly logger = new Logger(EstudiantesService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly usuariosService: UsuariosService,
+    private readonly mailService: MailService,
   ) {}
 
   // Registrar estudiante
   async create(createEstudianteDto: CreateEstudianteDto) {
     const {
       cedula,
-      password,
       nombre,
       apellido,
       correo,
@@ -47,7 +53,37 @@ export class EstudiantesService {
       throw new BadRequestException('La fecha de nacimiento es inválida.');
     }
 
-    return this.prisma.$transaction(async (tx) => {
+    const rawToken = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(rawToken).digest('hex');
+    const tokenExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const temporaryPassword = randomBytes(48).toString('hex');
+    let activationUrl: string;
+
+    try {
+      const configuredStudentAppUrl =
+        process.env.STUDENT_APP_URL ||
+        (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3003');
+      if (!configuredStudentAppUrl) {
+        throw new Error('STUDENT_APP_URL is required in production.');
+      }
+
+      const studentAppUrl = new URL(configuredStudentAppUrl);
+      if (!['http:', 'https:'].includes(studentAppUrl.protocol)) {
+        throw new Error('STUDENT_APP_URL must use HTTP or HTTPS.');
+      }
+
+      studentAppUrl.pathname = '/ui/ActivarCuenta';
+      studentAppUrl.search = '';
+      studentAppUrl.hash = '';
+      studentAppUrl.searchParams.set('token', rawToken);
+      activationUrl = studentAppUrl.toString();
+    } catch {
+      throw new ServiceUnavailableException(
+        'STUDENT_APP_URL no tiene una URL válida para enviar el enlace de activación.',
+      );
+    }
+
+    const createdStudent = await this.prisma.$transaction(async (tx) => {
       // Verificar si la cédula ya existe
       const usuarioExistente = await tx.usuarios.findUnique({
         where: {
@@ -74,7 +110,8 @@ export class EstudiantesService {
       const usuario = await tx.usuarios.create({
         data: {
           cedula,
-          password,
+          password: temporaryPassword,
+          estado: false,
         },
       });
 
@@ -112,17 +149,56 @@ export class EstudiantesService {
         },
       });
 
-      return {
-        message: 'Estudiante registrado correctamente.',
-        estudiante,
-        usuario: {
-          id: usuario.id,
-          cedula: usuario.cedula,
-          estado: usuario.estado,
+      await tx.activation_tokens.create({
+        data: {
+          token_hash: tokenHash,
+          usuario_id: usuario.id,
+          expires_at: tokenExpiresAt,
         },
-        rol: rolEstudiante.nombre,
+      });
+
+      return {
+        id: usuario.id,
+        email: estudiante.correo,
+        fullName: `${estudiante.nombre} ${estudiante.apellido}`,
       };
     });
+
+    try {
+      await this.mailService.sendStudentActivationEmail({
+        email: createdStudent.email,
+        fullName: createdStudent.fullName,
+        activationUrl,
+      });
+    } catch (error) {
+      try {
+        await this.prisma.usuarios.delete({
+          where: { id: createdStudent.id },
+        });
+      } catch (cleanupError) {
+        this.logger.error(
+          `No se pudo limpiar la cuenta pendiente ${createdStudent.id} tras fallar el envío del correo.`,
+          cleanupError instanceof Error ? cleanupError.stack : undefined,
+        );
+      }
+
+      if (error instanceof ServiceUnavailableException) {
+        throw error;
+      }
+
+      this.logger.error(
+        'No se pudo enviar el correo de activación.',
+        error instanceof Error ? error.stack : undefined,
+      );
+      throw new ServiceUnavailableException(
+        'No se pudo enviar el correo de activación. Inténtalo nuevamente.',
+      );
+    }
+
+    return {
+      message:
+        'Estudiante registrado. Se envió un enlace de activación al correo indicado.',
+    };
   }
 
   // Obtener todos los estudiantes

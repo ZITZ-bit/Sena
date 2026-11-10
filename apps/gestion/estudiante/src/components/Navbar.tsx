@@ -1,7 +1,6 @@
 'use client'
 
 import "boxicons/css/boxicons.min.css";
-import Link from "next/link";
 
 interface NavbarProps {
   onSelect: (section: string) => void;
@@ -34,11 +33,6 @@ function NavBar({ onSelect }: NavbarProps ) {
             <i className="bx bx-bar-chart-alt-2 text-lg" />
             <span className="text-sm">Estadisticas</span>
           </button>
-
-          <Link href="/academico" className="flex items-center gap-2 px-3 py-2 rounded-md bg-blue-600 hover:bg-blue-700 transition-colors cursor-pointer text-white">
-            <i className="bx bx-library text-lg" />
-            <span className="text-sm">Académico</span>
-          </Link>
 
         </nav>
 

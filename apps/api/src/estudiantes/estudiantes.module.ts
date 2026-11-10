@@ -5,9 +5,10 @@ import { EstudiantesService } from './estudiantes.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { UsuariosModule } from '../usuarios/usuarios.module';
 import { RolesModule } from '../roles/roles.module';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
-  imports: [PrismaModule, UsuariosModule, RolesModule],
+  imports: [PrismaModule, UsuariosModule, RolesModule, MailModule],
   controllers: [EstudiantesController],
   providers: [EstudiantesService],
   exports: [EstudiantesService],
