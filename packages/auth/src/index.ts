@@ -11,3 +11,4 @@ export { default as LoginAlert } from "./components/LoginAlert";
 export { AuthProvider, useAuth } from "./context/AuthContext";
 export { useUsuario } from "./hooks/useUsuario";
 export type { AuthContextValue } from "./context/AuthContext";
+export { clearSession, getSession, saveSession } from "./lib/session";

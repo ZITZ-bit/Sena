@@ -12,6 +12,7 @@ export default function LoginPage({ onLogin, onSuccess, onError, className }: Lo
     error,
     cedula,
     success,
+    successType,
     loading,
     password,
     setCedula,
@@ -57,7 +58,7 @@ export default function LoginPage({ onLogin, onSuccess, onError, className }: Lo
           )}
 
           {success && (
-            <LoginAlert type="success" message={success} />
+            <LoginAlert type={successType} message={success} />
           )}
 
           <section className="form-group">

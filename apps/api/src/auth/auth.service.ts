@@ -44,6 +44,7 @@ export class AuthService {
       message: 'Inicio de sesión exitoso.',
       usuario: {
         id: usuario.id,
+        nombre: usuario.nombre,
         cedula: usuario.cedula,
         estado: usuario.estado,
         roles: roles.map((r) => r.roles.nombre),

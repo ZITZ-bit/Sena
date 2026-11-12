@@ -30,7 +30,37 @@ export class UsuariosService {
 
   // Obtener todos
   async findAll() {
-    return this.prisma.usuarios.findMany();
+    return this.prisma.usuarios.findMany({
+      select: {
+        id: true,
+        nombre: true,
+        cedula: true,
+        estado: true,
+        created_at: true,
+        usuario_roles: {
+          select: {
+            roles: {
+              select: {
+                id: true,
+                nombre: true,
+              },
+            },
+          },
+        },
+        estudiantes: {
+          select: {
+            nombre: true,
+            apellido: true,
+          },
+        },
+        profesores: {
+          select: {
+            nombre: true,
+            apellido: true,
+          },
+        },
+      },
+    });
   }
 
   // Buscar por ID
@@ -38,6 +68,23 @@ export class UsuariosService {
     const usuario = await this.prisma.usuarios.findUnique({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        nombre: true,
+        cedula: true,
+        estado: true,
+        created_at: true,
+        usuario_roles: {
+          select: {
+            roles: {
+              select: {
+                id: true,
+                nombre: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -83,5 +130,12 @@ export class UsuariosService {
         estado: false,
       },
     });
+  }
+
+  async remove(id: number) {
+    await this.findOne(id);
+    await this.prisma.usuarios.delete({ where: { id } });
+
+    return { message: 'Usuario eliminado correctamente.' };
   }
 }

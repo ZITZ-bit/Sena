@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { AuthUser } from "../lib/auth.types";
+import { getSession } from "../lib/session";
 
 export interface AuthContextValue {
   usuario: AuthUser | null;
@@ -14,14 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<AuthUser | null>(null);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("usuario");
-      if (saved) {
-        setUsuario(JSON.parse(saved));
-      }
-    } catch {
-      setUsuario(null);
-    }
+    setUsuario(getSession());
   }, []);
 
   return (

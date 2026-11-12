@@ -104,8 +104,20 @@ export class ProfesoresService {
 
   async findAll() {
     return this.prisma.profesores.findMany({
-      include: {
-        usuarios: true,
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        correo: true,
+        fecha_nacimiento: true,
+        telefono: true,
+        direccion: true,
+        usuarios: {
+          select: {
+            cedula: true,
+            estado: true,
+          },
+        },
       },
     });
   }
@@ -113,8 +125,22 @@ export class ProfesoresService {
   async findOne(id: number) {
     const profesor = await this.prisma.profesores.findUnique({
       where: { id },
-      include: {
-        usuarios: true,
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        correo: true,
+        fecha_nacimiento: true,
+        telefono: true,
+        direccion: true,
+        usuario_id: true,
+        usuarios: {
+          select: {
+            id: true,
+            cedula: true,
+            estado: true,
+          },
+        },
       },
     });
 

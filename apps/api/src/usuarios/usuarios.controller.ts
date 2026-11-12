@@ -38,6 +38,6 @@ export class UsuariosController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usuariosService.disableUser(+id);
+    return this.usuariosService.remove(+id);
   }
 }

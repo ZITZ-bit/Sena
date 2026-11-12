@@ -26,6 +26,7 @@ export interface UseLoginReturn {
   setPassword: (value: string) => void;
   error: string;
   success: string;
+  successType: "success" | "Programador";
   loading: boolean;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }

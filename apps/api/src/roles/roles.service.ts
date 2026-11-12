@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -38,7 +39,11 @@ export class RolesService {
 
   // Obtener todos los roles
   async findAll() {
-    return this.prisma.roles.findMany();
+    return this.prisma.roles.findMany({
+      include: {
+        _count: { select: { usuario_roles: true } },
+      },
+    });
   }
 
   // Buscar un rol por ID
@@ -122,5 +127,21 @@ export class RolesService {
         roles: true,
       },
     });
+  }
+
+  async remove(id: number) {
+    const role = await this.findOne(id);
+    const assignedUsers = await this.prisma.usuario_roles.count({
+      where: { rol_id: id },
+    });
+
+    if (assignedUsers > 0) {
+      throw new ConflictException(
+        'No se puede eliminar un rol que todavía está asignado a usuarios.',
+      );
+    }
+
+    await this.prisma.roles.delete({ where: { id } });
+    return { message: `Rol ${role.nombre} eliminado correctamente.` };
   }
 }

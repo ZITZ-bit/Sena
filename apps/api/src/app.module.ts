@@ -11,6 +11,7 @@ import { SeccionesModule } from './secciones/secciones.module';
 import { SemestresModule } from './semestres/semestres.module';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
 import { ProfesoresModule } from './profesores/profesores.module';
+import { AsignacionesModule } from './asignaciones/asignaciones.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProfesoresModule } from './profesores/profesores.module';
     SeccionesModule,
     SemestresModule,
     ProfesoresModule,
+    AsignacionesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

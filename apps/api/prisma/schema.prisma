@@ -77,6 +77,7 @@ model usuario_roles {
 
 model usuarios {
   id            Int             @id @default(autoincrement())
+  nombre        String?         @db.VarChar(100)
   cedula        String          @unique @db.VarChar(20)
   password      String
   estado        Boolean?        @default(true)

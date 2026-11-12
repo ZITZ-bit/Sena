@@ -2,26 +2,18 @@
 
 import { useState, useEffect } from "react";
 import type { AuthResponse, AuthUser } from "../lib/auth.types";
+import { getSession } from "../lib/session";
 
 /**
- * Lee el usuario autenticado desde localStorage.
- * No realiza llamadas HTTP: la app consumidora es responsable de eso.
+ * Lee la sesión compartida del navegador sin realizar llamadas HTTP.
  */
 export function useUsuario() {
   const [usuario, setUsuario] = useState<AuthUser | null>(null);
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("usuario");
-      if (saved) {
-        setUsuario(JSON.parse(saved));
-      }
-    } catch {
-      setUsuario(null);
-    } finally {
-      setCargando(false);
-    }
+    setUsuario(getSession());
+    setCargando(false);
   }, []);
 
   return { usuario, setUsuario, cargando };

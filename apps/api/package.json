@@ -16,7 +16,7 @@
     "prisma:generate": "prisma generate --schema prisma/schema.prisma",
     "prisma:dbpull": "prisma db pull --config prisma/prisma.config.ts",
     "prisma:migrate:dev": "prisma migrate dev --config prisma/prisma.config.ts",
-    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:seed": "ts-node prisma/seeds/seed.ts",
     "prisma:studio": "prisma studio --schema prisma/schema.prisma",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",

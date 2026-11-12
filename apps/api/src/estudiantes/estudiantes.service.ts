@@ -207,7 +207,13 @@ export class EstudiantesService {
       include: {
         carreras: true,
         semestres: true,
-        usuarios: true,
+        usuarios: {
+          select: {
+            id: true,
+            cedula: true,
+            estado: true,
+          },
+        },
       },
     });
   }
@@ -221,7 +227,13 @@ export class EstudiantesService {
       include: {
         carreras: true,
         semestres: true,
-        usuarios: true,
+        usuarios: {
+          select: {
+            id: true,
+            cedula: true,
+            estado: true,
+          },
+        },
       },
     });
 

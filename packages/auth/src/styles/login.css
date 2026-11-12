@@ -264,6 +264,13 @@
     color: #176b3a;
 }
 
+.login-alert--programador {
+    border-color: #e7cc88;
+    background: linear-gradient(110deg, #fff8e6, #fffdf6);
+    color: #805d12;
+    box-shadow: 0 8px 20px rgb(128 93 18 / 8%);
+}
+
 .login-alert--error {
     border-color: #f0c1c1;
     background: #fff4f3;
@@ -285,6 +292,11 @@
 .login-alert--success .login-alert__icon {
     background: #d7eddd;
     color: #176b3a;
+}
+
+.login-alert--programador .login-alert__icon {
+    background: #f5e6bf;
+    color: #805d12;
 }
 
 .login-alert--error .login-alert__icon {

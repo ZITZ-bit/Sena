@@ -1,12 +1,33 @@
 "use client"
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { LoginPage } from "@sena/auth";
+import { getSession, LoginPage, saveSession } from "@sena/auth";
 import { login } from "@/lib/auth";
 
 export default function Page() {
   const router = useRouter();
+
+  useEffect(() => {
+    const usuario = getSession();
+    const roles = usuario?.roles;
+    if (!Array.isArray(roles)) {
+      return;
+    }
+
+    const isProgramador = roles.some(
+      (role) => typeof role === "string" && role.toLowerCase() === "programador",
+    );
+    if (isProgramador) {
+      window.location.assign(
+        process.env.NEXT_PUBLIC_PROGRAMADOR_URL ||
+          "http://localhost:3002/programador",
+      );
+      return;
+    }
+    router.replace("/ui/DashboardEstudiantes");
+  }, [router]);
 
   return (
     <LoginPage
@@ -15,10 +36,28 @@ export default function Page() {
       }
 
       onSuccess={(data) => {
-        localStorage.setItem("usuario", JSON.stringify(data.usuario));
+        if (data.usuario) {
+          saveSession(data.usuario);
+        }
+        const roles = data.usuario?.roles;
+        const isProgramador =
+          Array.isArray(roles) &&
+          roles.some(
+            (role) =>
+              typeof role === "string" &&
+              role.toLowerCase() === "programador",
+          );
+
         setTimeout(() => {
+          if (isProgramador) {
+            window.location.assign(
+              process.env.NEXT_PUBLIC_PROGRAMADOR_URL ||
+                "http://localhost:3002/programador",
+            );
+            return;
+          }
           router.push("/ui/DashboardEstudiantes");
-        }, 800);
+        }, isProgramador ? 1800 : 800);
       }}
     />
   );

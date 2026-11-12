@@ -1,14 +1,25 @@
 'use client'
 
+import { clearSession } from "@sena/auth";
 import { useSideBar } from "@/hooks/Global/useSidebar";
 
 interface SideBarProps {
   onSelect: (section: string) => void;
 }
 
+const portalUrl =
+  process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3001";
+const loginUrl =
+  process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:3003";
+
 function SideBar({onSelect}: SideBarProps) {
 
   const { open, menuItems, toggleSideBar } = useSideBar();
+
+  const logout = () => {
+    clearSession();
+    window.location.assign(loginUrl);
+  };
 
   return (
     <aside className="fixed left-0 top-0 h-screen flex z-50">
@@ -51,11 +62,21 @@ function SideBar({onSelect}: SideBarProps) {
 
         <section className="absolute bottom-0 left-0 w-full border-t border-[#717997]">
 
-          <button className="flex items-center gap-4 h-16 px-7 w-full hover:bg-red-500/20 transition-all duration-300 cursor-pointer">
-            
+          <a
+            href={portalUrl}
+            title="Volver al portal"
+            className="flex items-center gap-4 h-14 px-7 w-full hover:bg-[#707897] transition-all duration-300"
+          >
+            <i className="bx bx-home text-2xl" />
+            {open && <span>Volver al portal</span>}
+          </a>
+          <button
+            onClick={logout}
+            title="Cerrar sesión"
+            className="flex items-center gap-4 h-14 px-7 w-full hover:bg-red-500/20 transition-all duration-300 cursor-pointer"
+          >
             <i className="bx bx-log-out text-2xl" />
-            {open && ( <span>Cerrar Sesión</span> )}
-
+            {open && <span>Cerrar sesión</span>}
           </button>
 
         </section>
