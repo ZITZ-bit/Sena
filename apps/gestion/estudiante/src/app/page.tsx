@@ -22,7 +22,7 @@ export default function Page() {
     if (isProgramador) {
       window.location.assign(
         process.env.NEXT_PUBLIC_PROGRAMADOR_URL ||
-          "http://localhost:3002/programador",
+          "http://localhost:3003/programador",
       );
       return;
     }
@@ -52,7 +52,7 @@ export default function Page() {
           if (isProgramador) {
             window.location.assign(
               process.env.NEXT_PUBLIC_PROGRAMADOR_URL ||
-                "http://localhost:3002/programador",
+                "http://localhost:3003/programador",
             );
             return;
           }

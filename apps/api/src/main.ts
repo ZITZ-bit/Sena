@@ -10,8 +10,9 @@ async function bootstrap() {
   const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
-    'http://localhost:3003',
+    'http://localhost:3005',
     'http://localhost:3001',
+    'http://localhost:3003',
     'http://localhost:3002',
   ].filter(Boolean);
 

@@ -6,7 +6,7 @@ import { NavbarProgramador } from "@sena/programador";
 import ProgramadorDataTable from "./EstudiantesTable";
 
 const loginUrl =
-  process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:3003";
+  process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:3005";
 
 export default function ProgramadorPage() {
   const [activeSection, setActiveSection] = useState("Estudiantes");

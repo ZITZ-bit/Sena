@@ -22,17 +22,23 @@
     "dev:web": "turbo dev --filter=web",
     "dev:administrador": "turbo dev --filter=administrador",
     "dev:estudiante": "turbo dev --filter=estudiante",
-    "dev:gestion": "turbo dev --filter=estudiante --filter=administrador",
+    "dev:gestion": "turbo dev --filter=api --filter=web --filter=aula-virtual --filter=administrador --filter=profesor --filter=estudiante",
+    "dev:profesor": "turbo dev --filter=profesor",
+    "dev:aula-virtual": "turbo dev --filter=aula-virtual",
 
     "build:api": "turbo build --filter=api",
     "build:web": "turbo build --filter=web",
     "build:administrador": "turbo build --filter=administrador",
     "build:estudiante": "turbo build --filter=estudiante",
+    "build:profesor": "turbo build --filter=profesor",
+    "build:aula-virtual": "turbo build --filter=aula-virtual",
 
     "lint:api": "turbo lint --filter=api",
     "lint:web": "turbo lint --filter=web",
     "lint:administrador": "turbo lint --filter=administrador",
-    "lint:estudiante": "turbo lint --filter=estudiante"
+    "lint:estudiante": "turbo lint --filter=estudiante",
+    "lint:profesor": "turbo lint --filter=profesor",
+    "lint:aula-virtual": "turbo lint --filter=aula-virtual"
   },
 
   "devDependencies": {

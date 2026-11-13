@@ -51,7 +51,7 @@ export default function Navbar() {
           ))}
           <a
             className="rounded-full bg-[#163758] px-5 py-3 text-[13px] font-bold text-white transition-colors hover:bg-[#bd8320]"
-            href="http://localhost:3003"
+            href="http://localhost:3005"
           >
             Sistema académico <span aria-hidden="true">↗</span>
           </a>
@@ -92,7 +92,7 @@ export default function Navbar() {
           ))}
           <a
             className="mt-3 rounded-full bg-[#163758] px-5 py-3 text-center text-sm font-bold text-white"
-            href="http://localhost:3003"
+            href="http://localhost:3005"
             onClick={() => setMenuOpen(false)}
           >
             Sistema académico <span aria-hidden="true">↗</span>

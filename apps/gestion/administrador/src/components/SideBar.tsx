@@ -10,7 +10,7 @@ interface SideBarProps {
 const portalUrl =
   process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3001";
 const loginUrl =
-  process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:3003";
+  process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:3005";
 
 function SideBar({onSelect}: SideBarProps) {
 

@@ -59,7 +59,7 @@ export class EstudiantesService {
     try {
       const configuredStudentAppUrl =
         process.env.STUDENT_APP_URL ||
-        (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3003');
+        (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3005');
       if (!configuredStudentAppUrl) {
         throw new Error('STUDENT_APP_URL is required in production.');
       }
