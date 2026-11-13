@@ -31,6 +31,7 @@ export function useFormEst() {
 
   const [carreras, setCarreras] = useState<Carrera[]>([]);
   const [semestres, setSemestres] = useState<Semestre[]>([]);
+  const [activationUrl, setActivationUrl] = useState<string | null>(null);
 
   const {
     alert,
@@ -170,9 +171,13 @@ export function useFormEst() {
         responseData
       );
 
+      if (responseData.activationUrl) {
+        setActivationUrl(responseData.activationUrl);
+      }
+
       showSuccess(
         responseData.message ||
-          "Estudiante registrado. Se envió el enlace de activación al correo indicado."
+          "Estudiante registrado. Copia el enlace de activación."
       );
 
     } catch (error) {
@@ -192,6 +197,7 @@ export function useFormEst() {
     formData,
     carreras,
     semestres,
+    activationUrl,
     alert,
     handleChange,
     handleSubmit,

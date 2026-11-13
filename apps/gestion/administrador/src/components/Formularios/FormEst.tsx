@@ -17,7 +17,7 @@ import { useFormEst } from "@/hooks/Estudiantes/useFormEst";
 
 function FormEst() {
 
-  const { formData, alert, carreras, semestres,handleChange, handleSubmit } = useFormEst();
+  const { formData, alert, carreras, semestres, activationUrl, handleChange, handleSubmit } = useFormEst();
   const { open } = useSideBar();
 
   return (
@@ -34,6 +34,41 @@ function FormEst() {
 
             {alert.show && (  
               <Alert type={alert.type} message={alert.message}/>
+            )}
+
+            {activationUrl && (
+              <section className="lg:col-span-2 bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+                <h3 className="text-sm font-bold text-yellow-800 mb-2">
+                  🔗 Enlace de activación del estudiante
+                </h3>
+                <div className="space-y-2">
+                  <div>
+                    <label className="text-xs font-bold text-yellow-700 uppercase tracking-wider mb-1 block">
+                      URL de activación
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={activationUrl ?? ""}
+                        readOnly
+                        className="flex-1 bg-white border border-yellow-300 rounded px-3 py-2 text-sm text-yellow-800 font-mono"
+                      />
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(activationUrl ?? "");
+                        }}
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-semibold transition-colors"
+                        title="Copiar URL"
+                      >
+                        Copiar
+                      </button>
+                    </div>
+                  </div>
+                  <p className="text-xs text-yellow-600 mt-1">
+                    Envía este enlace al estudiante para que lo abra en su navegador y active su cuenta.
+                  </p>
+                </div>
+              </section>
             )}
 
             <div className="form-group">

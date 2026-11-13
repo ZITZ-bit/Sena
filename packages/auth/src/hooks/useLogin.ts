@@ -10,7 +10,7 @@ export function useLogin({ onLogin, onSuccess, onError }: UseLoginProps): UseLog
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [successType, setSuccessType] = useState<"success" | "Programador">("success");
+  const [successType, setSuccessType] = useState<"success" | "programador">("success");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (
@@ -52,7 +52,7 @@ export function useLogin({ onLogin, onSuccess, onError }: UseLoginProps): UseLog
             typeof role === "string" && role.toLowerCase() === "programador",
         );
 
-      setSuccessType(isProgramador ? "Programador" : "success");
+      setSuccessType(isProgramador ? "programador" : "success");
       setSuccess(
         isProgramador
           ? `Bienvenido${data.usuario?.nombre ? `, ${data.usuario.nombre}` : ""}. Tienes acceso al panel de programación.`

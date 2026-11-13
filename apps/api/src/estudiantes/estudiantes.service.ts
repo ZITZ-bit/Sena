@@ -4,13 +4,11 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
-  ServiceUnavailableException,
 } from '@nestjs/common';
 import { createHash, randomBytes } from 'node:crypto';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
-import { MailService } from '../mail/mail.service';
 
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
@@ -22,7 +20,6 @@ export class EstudiantesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly usuariosService: UsuariosService,
-    private readonly mailService: MailService,
   ) {}
 
   // Registrar estudiante
@@ -78,8 +75,8 @@ export class EstudiantesService {
       studentAppUrl.searchParams.set('token', rawToken);
       activationUrl = studentAppUrl.toString();
     } catch {
-      throw new ServiceUnavailableException(
-        'STUDENT_APP_URL no tiene una URL válida para enviar el enlace de activación.',
+      throw new BadRequestException(
+        'STUDENT_APP_URL no tiene una URL válida para el enlace de activación.',
       );
     }
 
@@ -164,40 +161,13 @@ export class EstudiantesService {
       };
     });
 
-    try {
-      await this.mailService.sendStudentActivationEmail({
-        email: createdStudent.email,
-        fullName: createdStudent.fullName,
-        activationUrl,
-      });
-    } catch (error) {
-      try {
-        await this.prisma.usuarios.delete({
-          where: { id: createdStudent.id },
-        });
-      } catch (cleanupError) {
-        this.logger.error(
-          `No se pudo limpiar la cuenta pendiente ${createdStudent.id} tras fallar el envío del correo.`,
-          cleanupError instanceof Error ? cleanupError.stack : undefined,
-        );
-      }
-
-      if (error instanceof ServiceUnavailableException) {
-        throw error;
-      }
-
-      this.logger.error(
-        'No se pudo enviar el correo de activación.',
-        error instanceof Error ? error.stack : undefined,
-      );
-      throw new ServiceUnavailableException(
-        'No se pudo enviar el correo de activación. Inténtalo nuevamente.',
-      );
-    }
-
     return {
       message:
-        'Estudiante registrado. Se envió un enlace de activación al correo indicado.',
+        'Estudiante registrado. Copia el enlace de activación y envíaselo al estudiante para que lo pegue en la URL de activación.',
+      activationUrl,
+      token: rawToken,
+      email: createdStudent.email,
+      fullName: createdStudent.fullName,
     };
   }
 

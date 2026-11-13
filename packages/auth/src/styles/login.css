@@ -150,6 +150,33 @@
     font-weight: 600;
 }
 
+.activation-page .system-header {
+    margin-bottom: 1.5rem;
+    transform: none;
+}
+
+.activation-title {
+    position: relative;
+    display: inline-block;
+    margin: .25rem 0 0;
+    padding-bottom: .8rem;
+    color: #173451;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+}
+
+.activation-title::after {
+    position: absolute;
+    right: 25%;
+    bottom: 0;
+    left: 25%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #f1b83f, #d69a24);
+    content: "";
+}
+
 .login-form {
     width: 100%;
     max-width: 360px;
@@ -163,7 +190,7 @@
 }
 
 .activation-description {
-    margin: -1rem 0 1.5rem;
+    margin: 0 0 1.5rem;
     color: #68788c;
     font-size: .88rem;
     line-height: 1.6;

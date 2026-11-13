@@ -62,6 +62,18 @@ export default function AccountActivationPage({
     };
   }, [token, onLoadAccount]);
 
+  useEffect(() => {
+    if (!success) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      window.location.assign("/");
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [success]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
@@ -84,7 +96,7 @@ export default function AccountActivationPage({
   };
 
   return (
-    <main className="login-container">
+    <main className="login-container activation-page">
       <a className="back-to-portal" href="http://localhost:3001">
         <span aria-hidden="true">←</span>
         Volver
@@ -111,7 +123,7 @@ export default function AccountActivationPage({
         <div className="system-header">
           <h1 className="system-title">SENA</h1>
           <h2 className="system-subtitle">Sistema de Gestión Académica</h2>
-          <h3 className="login-title">Activación de cuenta</h3>
+          <h3 className="login-title activation-title">Activación de cuenta</h3>
         </div>
 
         <div className="activation-content">

@@ -20,18 +20,18 @@
 
     "dev:api": "turbo dev --filter=api",
     "dev:web": "turbo dev --filter=web",
-    "dev:profesor": "turbo dev --filter=profesor",
+    "dev:administrador": "turbo dev --filter=administrador",
     "dev:estudiante": "turbo dev --filter=estudiante",
-    "dev:gestion": "turbo dev --filter=estudiante --filter=profesor",
+    "dev:gestion": "turbo dev --filter=estudiante --filter=administrador",
 
     "build:api": "turbo build --filter=api",
     "build:web": "turbo build --filter=web",
-    "build:profesor": "turbo build --filter=profesor",
+    "build:administrador": "turbo build --filter=administrador",
     "build:estudiante": "turbo build --filter=estudiante",
 
     "lint:api": "turbo lint --filter=api",
     "lint:web": "turbo lint --filter=web",
-    "lint:profesor": "turbo lint --filter=profesor",
+    "lint:administrador": "turbo lint --filter=administrador",
     "lint:estudiante": "turbo lint --filter=estudiante"
   },
 

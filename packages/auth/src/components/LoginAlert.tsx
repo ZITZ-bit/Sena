@@ -1,5 +1,5 @@
 interface LoginAlertProps {
-  type: "error" | "success" | "Programador";
+  type: "error" | "success" | "programador";
   message: string;
 }
 
@@ -8,7 +8,7 @@ export default function LoginAlert({ type, message }: LoginAlertProps) {
   if (!message) return null;
 
   const isError = type === "error";
-  const isProgramador = type === "Programador";
+  const isProgramador = type === "programador";
 
   return (
     <div
@@ -17,7 +17,7 @@ export default function LoginAlert({ type, message }: LoginAlertProps) {
         isError
           ? "login-alert--error"
           : isProgramador
-            ? "login-alert--Programador"
+            ? "login-alert--programador"
             : "login-alert--success"
       }`}
       role={isError ? "alert" : "status"}
@@ -30,7 +30,7 @@ export default function LoginAlert({ type, message }: LoginAlertProps) {
           {isError
             ? "No se pudo ingresar"
             : isProgramador
-              ? "Acceso de Programador"
+              ? "Acceso de programador"
               : "¡Bienvenido!"}
         </strong>
         <span className="login-alert__message">{message}</span>
