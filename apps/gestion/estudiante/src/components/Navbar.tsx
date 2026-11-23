@@ -13,7 +13,7 @@ const portalUrl =
 function NavBar({ onSelect }: NavbarProps ) {
   const logout = () => {
     clearSession();
-    window.location.assign("/");
+    window.location.assign("/estudiante/");
   };
 
   return (

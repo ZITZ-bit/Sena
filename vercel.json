@@ -1,0 +1,31 @@
+{
+  "$schema": "openapi.vercel.sh/vercel.json",
+  "services": {
+    "gestion-administrador": {
+      "root": ".",
+      "framework": "nextjs",
+      "installCommand": "npm install",
+      "buildCommand": "npx turbo run build --filter=administrador",
+      "outputDirectory": "apps/gestion/administrador/.next"
+    },
+    "gestion-estudiante": {
+      "root": ".",
+      "framework": "nextjs",
+      "installCommand": "npm install",
+      "buildCommand": "npx turbo run build --filter=estudiante",
+      "outputDirectory": "apps/gestion/estudiante/.next"
+    },
+    "gestion-profesor": {
+      "root": ".",
+      "framework": "nextjs",
+      "installCommand": "npm install",
+      "buildCommand": "npx turbo run build --filter=profesor",
+      "outputDirectory": "apps/gestion/profesor/.next"
+    }
+  },
+  "rewrites": [
+    { "source": "/administrador/:path*", "destination": { "service": "gestion-administrador" } },
+    { "source": "/estudiante/:path*", "destination": { "service": "gestion-estudiante" } },
+    { "source": "/profesor/:path*", "destination": { "service": "gestion-profesor" } }
+  ]
+}

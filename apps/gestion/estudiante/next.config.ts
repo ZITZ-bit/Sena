@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  basePath: "/estudiante",
   reactCompiler: true,
+  transpilePackages: ["@sena/auth"],
 };
 
 export default nextConfig;
