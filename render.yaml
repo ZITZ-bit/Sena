@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: sena-api
+    runtime: node
+    plan: free
+    rootDir: apps/api
+    buildCommand: npm install && npm run prisma:generate && npm run build
+    preDeployCommand: npm run prisma:migrate:deploy
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sena-db
+          property: connectionString
+      - key: FRONTEND_URL
+        sync: false
+      - key: ADMIN_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MAIL_HOST
+        sync: false
+      - key: MAIL_PORT
+        sync: false
+      - key: MAIL_USER
+        sync: false
+      - key: MAIL_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+
+databases:
+  - name: sena-db
+    databaseName: sena
+    plan: free
+    region: oregon
+    ipAllowList: []
